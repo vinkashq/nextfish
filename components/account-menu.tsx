@@ -1,0 +1,17 @@
+"use client";
+
+import { useCurrentUser } from "@authfire/core";
+import GuestMenu from "./guest-menu";
+import UserMenu from "./user-menu";
+import { useFirebase } from "@/lib/firebase";
+
+export default function AccountMenu() {
+  useFirebase()
+  const { isLoading, user } = useCurrentUser()
+
+  if (isLoading) return null
+
+  if (user) <UserMenu user={user} />
+
+  return <GuestMenu />
+}
