@@ -11,8 +11,8 @@ import { appName } from '@/lib/const'
 import { Metadata } from 'next'
 import { Separator } from '@/components/ui/separator'
 import Breadcrumb from '@/components/breadcrumb'
-import { Toaster } from '@/components/ui/sonner'
 import { BreadcrumbProvider } from '@/context/BreadcrumbContext'
+import Toaster from '@/components/toaster'
 
 export const metadata: Metadata = {
   title: {
