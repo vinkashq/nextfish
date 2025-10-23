@@ -3,7 +3,7 @@
 import { useCurrentUser } from "@authfire/core";
 import GuestMenu from "./guest-menu";
 import UserMenu from "./user-menu";
-import { useFirebase } from "@/lib/firebase";
+import { useFirebase } from "@/firebase/client";
 
 export default function AccountMenu() {
   useFirebase()
