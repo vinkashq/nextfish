@@ -8,7 +8,6 @@ import { useStore } from '@nanostores/react';
 import { $analytics, $app, $appCheck, $auth, $firestore, $loading, $storage, setAnalytics, setApp, setAppCheck, setAuth, setFirestore, setLoading, setStorage } from "./store";
 import { baseUrl, idTokenVerificationUrl, recaptchaSiteKey, serverSignOutUrl, serverTokenUrl } from "@/lib/const";
 import { initialize } from "@authfire/core"
-import { useEffect } from "react";
 import config from "./config";
 
 const useFirebase = () => {
@@ -20,47 +19,45 @@ const useFirebase = () => {
   let storage = useStore($storage);
   let analytics = useStore($analytics);
 
-  useEffect(() => {
-    if (!app) {
-      try {
-        app = getApp() || initializeApp(config)
-      } catch {
-        app = initializeApp(config)
-      }
-      setApp(app);
+  if (!app) {
+    try {
+      app = getApp() || initializeApp(config)
+    } catch {
+      app = initializeApp(config)
     }
+    setApp(app);
+  }
 
-    if (!appCheck && recaptchaSiteKey) {
-      appCheck = initializeAppCheck(app, {
-        provider: new ReCaptchaV3Provider(recaptchaSiteKey),
-        isTokenAutoRefreshEnabled: true
-      });
-      setAppCheck(appCheck);
-    }
+  if (!appCheck && recaptchaSiteKey) {
+    appCheck = initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider(recaptchaSiteKey),
+      isTokenAutoRefreshEnabled: true
+    });
+    setAppCheck(appCheck);
+  }
 
-    if (!auth) {
-      auth = getAuth(app);
-      setAuth(auth);
-    }
+  if (!auth) {
+    auth = getAuth(app);
+    setAuth(auth);
+  }
 
-    if (!firestore) {
-      firestore = getFirestore(app);
-      setFirestore(firestore);
-    }
+  if (!firestore) {
+    firestore = getFirestore(app);
+    setFirestore(firestore);
+  }
 
-    if (!storage) {
-      storage = getStorage(app);
-      setStorage(storage);
-    }
+  if (!storage) {
+    storage = getStorage(app);
+    setStorage(storage);
+  }
 
-    if (!analytics) {
-      analytics = getAnalytics(app);
-      setAnalytics(analytics);
-    }
+  if (!analytics && typeof window !== 'undefined') {
+    analytics = getAnalytics(app);
+    setAnalytics(analytics);
+  }
 
-    isLoading = false;
-    setLoading(isLoading);
-  }, [app])
+  isLoading = false;
+  setLoading(isLoading);
 
   return {
     isLoading,
@@ -84,7 +81,7 @@ const getAppCheckToken = async (forceRefresh: boolean = false) => {
   return result.token;
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 const logEvent = (eventName: string, eventParams?: Record<string, any>) => {
   const analytics = $analytics.get();
   if (!analytics) {
