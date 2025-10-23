@@ -33,7 +33,15 @@ export const openIdConfig = {
 
 export const defaultMenu: Menu = {
   title: "Platform",
-  items: []
+  items: [{
+    title: "Dashboard",
+    url: "/",
+    isActive: true,
+    items: [{
+      title: "Home",
+      url: "/"
+    }]
+  }]
 }
 
 export const menus: Menu[] = [defaultMenu]

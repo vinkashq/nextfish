@@ -29,7 +29,7 @@ import { ComponentProps } from "react"
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="my-2">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
@@ -49,14 +49,21 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
           {menus.map((menu, index) => (
             <AccordionItem key={index} value={index.toString()}>
               <SidebarGroup>
-                <AccordionTrigger className="py-0">
-                  <SidebarGroupLabel>
-                    {menu.title}
-                  </SidebarGroupLabel>
-                </AccordionTrigger>
-                <AccordionContent asChild>
+                {menus.length === 1 && (
                   <NavMenu items={menu.items} />
-                </AccordionContent>
+                )}
+                {menus.length > 1 && (
+                  <>
+                    <AccordionTrigger className="py-1">
+                      <SidebarGroupLabel className="h-4">
+                        {menu.title}
+                      </SidebarGroupLabel>
+                    </AccordionTrigger>
+                    <AccordionContent asChild>
+                      <NavMenu items={menu.items} />
+                    </AccordionContent>
+                  </>
+                )}
               </SidebarGroup>
             </AccordionItem>
           ))}
