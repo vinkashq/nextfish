@@ -10,8 +10,9 @@ import {
 import { appName } from '@/lib/const'
 import { Metadata } from 'next'
 import { Separator } from '@/components/ui/separator'
-import AppBreadcrumb from '@/components/app-breadcrumb'
+import Breadcrumb from '@/components/breadcrumb'
 import { Toaster } from '@/components/ui/sonner'
+import { BreadcrumbProvider } from '@/context/BreadcrumbContext'
 
 export const metadata: Metadata = {
   title: {
@@ -38,6 +39,7 @@ export default function RootLayout({
             <AppSidebar />
             <SidebarInset>
               <main className="flex flex-col items-center justify-center min-h-screen">
+                <BreadcrumbProvider>
                 <header className="flex w-full h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
                   <div className="flex items-center gap-2 px-4 w-full">
                     <SidebarTrigger className="size-9" />
@@ -45,7 +47,7 @@ export default function RootLayout({
                       orientation="vertical"
                       className="mr-2 data-[orientation=vertical]:h-4"
                     />
-                    <AppBreadcrumb />
+                    <Breadcrumb />
                     <div className='grow'></div>
                     <ModeToggle />
                   </div>
@@ -53,6 +55,7 @@ export default function RootLayout({
                 <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                   {children}
                 </div>
+                </BreadcrumbProvider>
               </main>
             </SidebarInset>
           </SidebarProvider>

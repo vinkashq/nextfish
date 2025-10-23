@@ -4,7 +4,7 @@ import { getInputValue } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { baseUrl, emailLinkLoginUrl } from "@/lib/const"
 import { sendSignInLinkToEmail, signInWithEmailAndPassword } from "firebase/auth"
 import { LoadingIcon } from "@/components/loading-icon"
@@ -12,6 +12,7 @@ import { toast } from "sonner"
 import GoogleSignInButton from "@/components/google-signin-button"
 import { signIn } from "@authfire/core"
 import { useFirebase } from "@/firebase/client"
+import BreadcrumbHeading from "@/components/breadcrumb-heading"
 
 export default function Page() {
   const { auth } = useFirebase();
@@ -103,6 +104,7 @@ export default function Page() {
 
   return (
     <form id="login" className="flex flex-col gap-6">
+      <BreadcrumbHeading text="Sign in" />
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Login to your account</h1>
         <p className="text-muted-foreground text-sm text-balance">

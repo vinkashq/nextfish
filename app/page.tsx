@@ -1,7 +1,11 @@
+import BreadcrumbHeading from "@/components/breadcrumb-heading";
 import Welcome from "@/components/welcome";
 
 export default function Page() {
   return (
-    <Welcome />
+    <>
+      <BreadcrumbHeading text="Welcome" />
+      <Welcome />
+    </>
   );
 }

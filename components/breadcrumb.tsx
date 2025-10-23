@@ -1,17 +1,20 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
+"use client";
+
+import { Breadcrumb as BreadcrumbContainer, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
+import { useBreadcrumb } from '@/context/BreadcrumbContext'
+import { appName } from '@/lib/const'
 import Link from '@/types/link'
 
 export const links: Link[] = [{
-  title: "Vinkas",
-  url: "https://vinkas.com"
-}, {
-  title: "NextFish",
+  title: appName,
   url: "/"
 }]
 
-export default function AppBreadcrumb() {
+export default function Breadcrumb() {
+  const { heading } = useBreadcrumb()
+  
   return (
-    <Breadcrumb>
+    <BreadcrumbContainer>
       <BreadcrumbList>
         {links.map((link) => (
           <>
@@ -24,9 +27,9 @@ export default function AppBreadcrumb() {
           </>
         ))}
         <BreadcrumbItem>
-          <BreadcrumbPage>Dashboard</BreadcrumbPage>
+          <BreadcrumbPage>{heading}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
-    </Breadcrumb>
+    </BreadcrumbContainer>
   )
 }
