@@ -11,6 +11,7 @@ import { appName } from '@/lib/const'
 import { Metadata } from 'next'
 import { Separator } from '@/components/ui/separator'
 import AppBreadcrumb from '@/components/app-breadcrumb'
+import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
   title: {
@@ -55,6 +56,7 @@ export default function RootLayout({
               </main>
             </SidebarInset>
           </SidebarProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
