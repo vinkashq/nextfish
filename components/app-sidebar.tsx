@@ -1,12 +1,5 @@
 "use client"
 
-import {
-  BookOpen,
-  Bot,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
-
 import NavMenu from "@/components/nav-menu"
 import {
   Sidebar,

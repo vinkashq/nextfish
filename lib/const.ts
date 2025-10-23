@@ -1,4 +1,5 @@
 import { Menu } from "@/types/menu";
+import { Home } from "lucide-react";
 
 export const appName = process.env.NEXT_PUBLIC_APP_NAME || "NextFish";
 export const baseUrl = `https://${process.env.NEXT_PUBLIC_HOSTNAME}`;
@@ -34,13 +35,9 @@ export const openIdConfig = {
 export const defaultMenu: Menu = {
   title: "Platform",
   items: [{
-    title: "Dashboard",
+    title: "Home",
     url: "/",
-    isActive: true,
-    items: [{
-      title: "Home",
-      url: "/"
-    }]
+    icon: Home,
   }]
 }
 
