@@ -1,4 +1,4 @@
-export interface SubMenuItem {
+export default interface Link {
   title: string,
   url: string
 }

@@ -10,7 +10,7 @@ import {
 import { appName } from '@/lib/const'
 import { Metadata } from 'next'
 import { Separator } from '@/components/ui/separator'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
+import AppBreadcrumb from '@/components/app-breadcrumb'
 
 export const metadata: Metadata = {
   title: {
@@ -44,25 +44,7 @@ export default function RootLayout({
                       orientation="vertical"
                       className="mr-2 data-[orientation=vertical]:h-4"
                     />
-                    <Breadcrumb>
-                      <BreadcrumbList>
-                        <BreadcrumbItem className="hidden md:block">
-                          <BreadcrumbLink href="https://vinkas.com">
-                            Vinkas
-                          </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator className="hidden md:block" />
-                        <BreadcrumbItem className="hidden md:block">
-                          <BreadcrumbLink href="#">
-                            NextFish
-                          </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator className="hidden md:block" />
-                        <BreadcrumbItem>
-                          <BreadcrumbPage>Dashboard</BreadcrumbPage>
-                        </BreadcrumbItem>
-                      </BreadcrumbList>
-                    </Breadcrumb>
+                    <AppBreadcrumb />
                     <div className='grow'></div>
                     <ModeToggle />
                   </div>
