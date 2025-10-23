@@ -6,9 +6,10 @@ import { getToken, initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-
 import { getAnalytics, logEvent as _logEvent } from "firebase/analytics";
 import { useStore } from '@nanostores/react';
 import { $analytics, $app, $appCheck, $auth, $firestore, $loading, $storage, setAnalytics, setApp, setAppCheck, setAuth, setFirestore, setLoading, setStorage } from "./store";
-import { baseUrl, firebaseConfig, idTokenVerificationUrl, recaptchaSiteKey, serverSignOutUrl, serverTokenUrl } from "@/lib/const";
+import { baseUrl, idTokenVerificationUrl, recaptchaSiteKey, serverSignOutUrl, serverTokenUrl } from "@/lib/const";
 import { initialize } from "@authfire/core"
 import { useEffect } from "react";
+import config from "./config";
 
 const useFirebase = () => {
   let isLoading = useStore($loading);
@@ -22,9 +23,9 @@ const useFirebase = () => {
   useEffect(() => {
     if (!app) {
       try {
-        app = getApp() || initializeApp(firebaseConfig)
+        app = getApp() || initializeApp(config)
       } catch {
-        app = initializeApp(firebaseConfig)
+        app = initializeApp(config)
       }
       setApp(app);
     }
