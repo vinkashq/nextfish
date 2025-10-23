@@ -1,3 +1,5 @@
+import { Menu } from "@/types/menu";
+
 export const appName = process.env.NEXT_PUBLIC_APP_NAME || "NextFish";
 export const baseUrl = `https://${process.env.NEXT_PUBLIC_HOSTNAME}`;
 export const emailLinkLoginUrl = `${baseUrl}/email-link-login`;
@@ -28,3 +30,10 @@ export const openIdConfig = {
   name: process.env.NEXT_PUBLIC_OPENID_CONNECT_NAME,
   logoUrl: process.env.NEXT_PUBLIC_OPENID_CONNECT_LOGO_URL,
 }
+
+export const defaultMenu: Menu = {
+  title: "Platform",
+  items: []
+}
+
+export const menus: Menu[] = [defaultMenu]

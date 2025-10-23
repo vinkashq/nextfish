@@ -47,13 +47,19 @@ export default function RootLayout({
                     <Breadcrumb>
                       <BreadcrumbList>
                         <BreadcrumbItem className="hidden md:block">
+                          <BreadcrumbLink href="https://vinkas.com">
+                            Vinkas
+                          </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator className="hidden md:block" />
+                        <BreadcrumbItem className="hidden md:block">
                           <BreadcrumbLink href="#">
-                            Building Your Application
+                            NextFish
                           </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator className="hidden md:block" />
                         <BreadcrumbItem>
-                          <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                          <BreadcrumbPage>Dashboard</BreadcrumbPage>
                         </BreadcrumbItem>
                       </BreadcrumbList>
                     </Breadcrumb>
