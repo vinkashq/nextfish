@@ -4,7 +4,7 @@ import Welcome from "@/components/welcome";
 export default function Page() {
   return (
     <>
-      <BreadcrumbHeading text="Welcome" />
+      <BreadcrumbHeading text="" />
       <Welcome />
     </>
   );

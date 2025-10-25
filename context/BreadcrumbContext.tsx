@@ -2,14 +2,14 @@
 import { createContext, useState, useContext, ReactNode } from "react";
 
 const BreadcrumbContext = createContext({
-  heading: "",
+  heading: "Loading...",
   setHeading: (heading: string) => {},
 });
 
 export const useBreadcrumb = () => useContext(BreadcrumbContext);
 
 export const BreadcrumbProvider = ({ children }: { children: ReactNode }) => {
-  const [heading, setHeading] = useState("");
+  const [heading, setHeading] = useState("Loading...");
   return (
     <BreadcrumbContext.Provider value={{ heading, setHeading }}>
       {children}
