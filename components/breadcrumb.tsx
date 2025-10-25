@@ -3,11 +3,13 @@
 import { Breadcrumb as BreadcrumbContainer, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { useBreadcrumb } from '@/context/BreadcrumbContext'
 import Link from '@/types/link'
+import { useSidebar } from './ui/sidebar';
 
 export const links: Link[] = []
 
 export default function Breadcrumb() {
   const { heading } = useBreadcrumb()
+  const { isMobile } = useSidebar()
   
   return (
     <BreadcrumbContainer>
@@ -22,11 +24,11 @@ export default function Breadcrumb() {
             </BreadcrumbItem>
           </>
         ))}
-        {heading && (
+        {heading && !isMobile && (
           <>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage className="font-semibold text-base leading-8 h-8 mt-0.5">{heading}</BreadcrumbPage>
+              <BreadcrumbPage className="text-base leading-8 h-8 mt-0.5">{heading}</BreadcrumbPage>
             </BreadcrumbItem>
           </>
         )}
