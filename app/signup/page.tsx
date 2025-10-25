@@ -66,7 +66,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 w-full max-w-md mx-auto">
       <BreadcrumbHeading text="Sign up" />
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
