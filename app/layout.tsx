@@ -1,4 +1,3 @@
-import { ModeToggle } from '@/components/mode-toggle'
 import './globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
 import { AppSidebar } from "@/components/app-sidebar"
@@ -7,7 +6,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { appName, legalBusinessName } from '@/lib/const'
+import { appName, legalBusinessName, privacyPolicyUrl, termsOfServiceUrl } from '@/config'
 import { Metadata } from 'next'
 import Breadcrumb from '@/components/breadcrumb'
 import { BreadcrumbProvider } from '@/context/BreadcrumbContext'
@@ -58,8 +57,8 @@ export default function RootLayout({
                     &copy; {new Date().getFullYear()} {legalBusinessName}
                   </div>
                   <div className='flex gap-4'>
-                    <Link href="/policies/privacy">Privacy</Link>
-                    <Link href="/policies/terms">Terms</Link>
+                    <Link href={privacyPolicyUrl}>Privacy</Link>
+                    <Link href={termsOfServiceUrl}>Terms</Link>
                   </div>
                 </footer>
               </BreadcrumbProvider>

@@ -15,7 +15,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { appName } from "@/lib/const"
+import { appName } from "@/config"
 import Logomark from "./logomark"
 import { useState } from "react"
 

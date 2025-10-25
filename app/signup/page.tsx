@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { privacyPolicyUrl, termsOfServiceUrl } from "@/lib/const";
+import { privacyPolicyUrl, termsOfServiceUrl } from "@/config";
 import GoogleSignInButton from "@/components/google-signin-button";
 import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";

@@ -1,4 +1,4 @@
-import { appName } from "@/lib/const";
+import { appName } from "@/config";
 import Logomark from "./logomark";
 
 export default function Welcome() {

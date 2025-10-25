@@ -1,5 +1,5 @@
 import BreadcrumbHeading from "@/components/breadcrumb-heading";
-import { hostname, legalBusinessAddress, legalBusinessCountry, legalBusinessName, legalContactEmail } from "@/lib/const";
+import { hostname, legalBusinessAddress, legalBusinessCountry, legalBusinessName, legalContactEmail } from "@/config";
 
 export default function Page() {
   return (

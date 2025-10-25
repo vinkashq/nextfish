@@ -1,4 +1,4 @@
-import { appName } from "@/lib/const";
+import { appName } from "@/config";
 
 export default function Logotype() {
   return (

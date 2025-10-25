@@ -14,7 +14,7 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { menus } from "@/lib/const"
+import { menus } from "@/config/menu"
 import Logomark from "./logomark"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion"
 import AccountMenu from "./account-menu"

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { MouseEvent, useState } from 'react';
 import { toast } from "sonner";
-import { baseUrl } from "@/lib/const";
+import { baseUrl } from "@/config";
 import { signIn } from '@authfire/core';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useFirebase } from '@/firebase/client';
