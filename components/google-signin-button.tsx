@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { MouseEvent, useState } from 'react';
 import { toast } from "sonner";
 import { baseUrl } from "@/config";
-import { signIn } from '@authfire/core';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useFirebase } from '@/firebase/client';
+import { signIn } from '@/firebase/client/auth';
 
 export default function GoogleSignInButton() {
   const { auth } = useFirebase();

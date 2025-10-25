@@ -7,7 +7,6 @@ import { getAnalytics, logEvent as _logEvent } from "firebase/analytics";
 import { useStore } from '@nanostores/react';
 import { $analytics, $app, $appCheck, $auth, $firestore, $loading, $storage, setAnalytics, setApp, setAppCheck, setAuth, setFirestore, setLoading, setStorage } from "./store";
 import { baseUrl, idTokenVerificationUrl, recaptchaSiteKey, serverSignOutUrl, serverTokenUrl } from "@/config";
-import { initialize } from "@authfire/core"
 import config from "./config";
 
 const useFirebase = () => {
@@ -90,15 +89,5 @@ const logEvent = (eventName: string, eventParams?: Record<string, any>) => {
   }
   _logEvent(analytics, eventName, eventParams);
 }
-
-initialize({
-  baseUrl,
-  idTokenVerificationUrl,
-  serverTokenUrl,
-  serverSignOutUrl,
-  useFirebase,
-  getAppCheckToken,
-  logEvent
-})
 
 export { useFirebase, getAppCheckToken, logEvent };

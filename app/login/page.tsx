@@ -9,10 +9,10 @@ import { baseUrl, emailLinkLoginUrl } from "@/config"
 import { sendSignInLinkToEmail, signInWithEmailAndPassword } from "firebase/auth"
 import { toast } from "sonner"
 import GoogleSignInButton from "@/components/google-signin-button"
-import { signIn } from "@authfire/core"
 import { useFirebase } from "@/firebase/client"
 import BreadcrumbHeading from "@/components/breadcrumb-heading"
 import { Spinner } from "@/components/ui/spinner"
+import { signIn } from "@/firebase/client/auth"
 
 export default function Page() {
   const { auth } = useFirebase();

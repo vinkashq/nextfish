@@ -1,6 +1,6 @@
 "use client";
 
-import { useCurrentUser } from "@authfire/core";
+import { useCurrentUser } from "@/firebase/client/auth";
 import GuestMenu from "./guest-menu";
 import UserMenu from "./user-menu";
 import { useFirebase } from "@/firebase/client";
