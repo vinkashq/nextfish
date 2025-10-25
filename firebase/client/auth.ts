@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
 import { Auth, onAuthStateChanged, User, UserCredential } from "firebase/auth"
 import { getServerToken, postRequest } from "@/lib/utils";
-import { baseUrl, idTokenVerificationUrl, serverSignOutUrl, serverTokenUrl } from "@/config";
+import { baseUrl } from "@/config";
 import { logEvent, useFirebase } from ".";
+
+const idTokenVerificationUrl = `${baseUrl}/verify-id-token`
+const serverTokenUrl = `${baseUrl}/token`
+const serverSignOutUrl = `${baseUrl}/sign-out`
 
 const verifyIdToken = async (user: User) => {
   if (!idTokenVerificationUrl) {
