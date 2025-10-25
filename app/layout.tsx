@@ -41,7 +41,7 @@ export default function RootLayout({
             <AppSidebar />
             <SidebarInset className="flex flex-col items-center justify-between min-h-dvh">
               <BreadcrumbProvider>
-                <header className="flex w-full h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+                <header className="flex w-full h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
                   <div className="flex items-center gap-2 px-4 w-full">
                     <SidebarTrigger className="size-9" mobileIcon="Menu" mobileOnly={true} />
                     <Link href="/"><Logotype /></Link>
