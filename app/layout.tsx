@@ -7,7 +7,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { appName } from '@/lib/const'
+import { appName, legalBusinessName } from '@/lib/const'
 import { Metadata } from 'next'
 import { Separator } from '@/components/ui/separator'
 import Breadcrumb from '@/components/breadcrumb'
@@ -37,9 +37,8 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <AppSidebar />
-            <SidebarInset>
-              <main className="flex flex-col items-center justify-center min-h-screen">
-                <BreadcrumbProvider>
+            <SidebarInset className="flex flex-col items-center justify-between min-h-dvh">
+              <BreadcrumbProvider>
                 <header className="flex w-full h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
                   <div className="flex items-center gap-2 px-4 w-full">
                     <SidebarTrigger className="size-9" />
@@ -49,14 +48,18 @@ export default function RootLayout({
                     />
                     <Breadcrumb />
                     <div className='grow'></div>
-                    <ModeToggle />
                   </div>
                 </header>
-                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                <div className="flex flex-col gap-4 p-4 pt-0">
                   {children}
                 </div>
-                </BreadcrumbProvider>
-              </main>
+                <footer className="w-full flex gap-4 justify-between text-xs text-neutral-500 p-4">
+                  <div className="text-center lg:text-left leading-9 px-2">
+                    &copy; {new Date().getFullYear()} {legalBusinessName}
+                  </div>
+                  <ModeToggle />
+                </footer>
+              </BreadcrumbProvider>
             </SidebarInset>
           </SidebarProvider>
           <Toaster />
