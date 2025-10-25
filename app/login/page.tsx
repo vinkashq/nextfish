@@ -4,15 +4,15 @@ import { getInputValue } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { baseUrl, emailLinkLoginUrl } from "@/lib/const"
 import { sendSignInLinkToEmail, signInWithEmailAndPassword } from "firebase/auth"
-import { LoadingIcon } from "@/components/loading-icon"
 import { toast } from "sonner"
 import GoogleSignInButton from "@/components/google-signin-button"
 import { signIn } from "@authfire/core"
 import { useFirebase } from "@/firebase/client"
 import BreadcrumbHeading from "@/components/breadcrumb-heading"
+import { Spinner } from "@/components/ui/spinner"
 
 export default function Page() {
   const { auth } = useFirebase();
@@ -122,7 +122,7 @@ export default function Page() {
               variant="link"
               className="ml-auto h-5"
             >
-              <LoadingIcon aria-disabled={isDisabled} />
+              <Spinner variant="visibleOnDisabled" aria-disabled={isDisabled} />
               Send login link
             </Button>
           </div>
@@ -141,7 +141,7 @@ export default function Page() {
           <Input id="password" type="password" required={passwordRequired} />
         </div>
         <Button type="button" className="w-full" disabled={isDisabled} onClick={signInWithPassword}>
-          <LoadingIcon aria-disabled={isDisabled} />
+          <Spinner variant="visibleOnDisabled" aria-disabled={isDisabled} />
           Login
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
