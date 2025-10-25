@@ -1,4 +1,4 @@
-import { defaultMenu, menus } from '@/config';
+import { defaultMenu, menus } from '@/config/menu';
 import { Menu } from '@/types/menu';
 import { MenuItem } from '@/types/menu-item';
 
