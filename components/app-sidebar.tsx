@@ -31,11 +31,11 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
               className="group-data-[collapsible=icon]:p-1! hover:bg-transparent"
               asChild
             >
-              <div className="flex justify-between w-full">
+              <div className="flex justify-between w-full group-data-[collapsible=icon]:flex-col  group-data-[collapsible=icon]:h-22!">
                 <Link href="/">
                   <Logomark className="!size-6" />
                 </Link>
-                <SidebarTrigger className="size-9" mobileIcon="X" />
+                <SidebarTrigger className="size-9 text-muted-foreground" mobileIcon="X" />
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
