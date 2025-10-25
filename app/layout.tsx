@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/sidebar"
 import { appName, legalBusinessName } from '@/lib/const'
 import { Metadata } from 'next'
-import { Separator } from '@/components/ui/separator'
 import Breadcrumb from '@/components/breadcrumb'
 import { BreadcrumbProvider } from '@/context/BreadcrumbContext'
 import Toaster from '@/components/toaster'
@@ -41,11 +40,7 @@ export default function RootLayout({
               <BreadcrumbProvider>
                 <header className="flex w-full h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
                   <div className="flex items-center gap-2 px-4 w-full">
-                    <SidebarTrigger className="size-9" />
-                    <Separator
-                      orientation="vertical"
-                      className="mr-2 data-[orientation=vertical]:h-4"
-                    />
+                    <SidebarTrigger className="size-9" mobileIcon="Menu" mobileOnly={true} />
                     <Breadcrumb />
                     <div className='grow'></div>
                   </div>

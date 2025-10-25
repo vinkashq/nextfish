@@ -12,12 +12,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { appName, menus } from "@/lib/const"
 import Logomark from "./logomark"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion"
 import AccountMenu from "./account-menu"
 import { ComponentProps } from "react"
+import { X } from "lucide-react"
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   return (
@@ -26,13 +28,16 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-            className="group-data-[collapsible=icon]:p-1!"
+              className="group-data-[collapsible=icon]:p-1! hover:bg-transparent"
               asChild
             >
-              <a href="#">
-                <Logomark className="!size-6" />
-                <span className="text-2xl font-semibold leading-none">{appName}</span>
-              </a>
+              <div className="flex justify-between w-full">
+                <a href="#" className="flex gap-2">
+                  <Logomark className="!size-6" />
+                  <span className="text-2xl font-semibold leading-none">{appName}</span>
+                </a>
+                <SidebarTrigger className="size-9" mobileIcon="X" />
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
