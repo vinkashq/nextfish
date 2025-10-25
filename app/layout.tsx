@@ -14,6 +14,7 @@ import { BreadcrumbProvider } from '@/context/BreadcrumbContext'
 import Toaster from '@/components/toaster'
 import Logotype from '@/components/logotype'
 import Link from 'next/link'
+import SignInButton from '@/components/sign-in-button'
 
 export const metadata: Metadata = {
   title: {
@@ -46,16 +47,20 @@ export default function RootLayout({
                     <Link href="/"><Logotype /></Link>
                     <Breadcrumb />
                     <div className='grow'></div>
+                    <SignInButton />
                   </div>
                 </header>
                 <div className="flex flex-col gap-4 p-4 pt-0">
                   {children}
                 </div>
-                <footer className="w-full flex gap-4 justify-between text-xs text-neutral-500 p-4">
-                  <div className="text-center lg:text-left leading-9 px-2">
+                <footer className="w-full flex gap-4 justify-between text-xs text-neutral-500 py-4 px-6">
+                  <div className="text-center lg:text-left">
                     &copy; {new Date().getFullYear()} {legalBusinessName}
                   </div>
-                  <ModeToggle />
+                  <div className='flex gap-4'>
+                    <Link href="/policies/privacy">Privacy</Link>
+                    <Link href="/policies/terms">Terms</Link>
+                  </div>
                 </footer>
               </BreadcrumbProvider>
             </SidebarInset>
