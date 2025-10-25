@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { toast } from "sonner";
 import { baseUrl } from "@/lib/const";
 import { signIn } from '@authfire/core';
@@ -12,7 +12,7 @@ export default function GoogleSignInButton() {
   const { auth } = useFirebase();
   const [isDisabled, setIsDisabled] = useState(false);
 
-  function signInWithGoogle(event: React.MouseEvent<HTMLButtonElement>) {
+  function signInWithGoogle(event: MouseEvent<HTMLButtonElement>) {
     if (!auth) return;
     event.preventDefault();
     setIsDisabled(true);
