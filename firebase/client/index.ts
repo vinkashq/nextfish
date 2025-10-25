@@ -6,7 +6,7 @@ import { getToken, initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-
 import { getAnalytics, logEvent as _logEvent } from "firebase/analytics";
 import { useStore } from '@nanostores/react';
 import { $analytics, $app, $appCheck, $auth, $firestore, $loading, $storage, setAnalytics, setApp, setAppCheck, setAuth, setFirestore, setLoading, setStorage } from "./store";
-import { baseUrl, idTokenVerificationUrl, recaptchaSiteKey, serverSignOutUrl, serverTokenUrl } from "@/config";
+import { recaptchaSiteKey } from "@/config";
 import config from "./config";
 
 const useFirebase = () => {
