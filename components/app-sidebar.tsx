@@ -1,6 +1,6 @@
 "use client"
 
-import NavMenu from "@/components/nav-menu"
+import SidebarNav from "@/components/sidebar/nav"
 import {
   Sidebar,
   SidebarContent,
@@ -47,7 +47,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
             <AccordionItem key={index} value={index.toString()}>
               <SidebarGroup>
                 {menus.length === 1 && (
-                  <NavMenu items={menu.items} />
+                  <SidebarNav items={menu.items} />
                 )}
                 {menus.length > 1 && (
                   <>
@@ -57,7 +57,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                       </SidebarGroupLabel>
                     </AccordionTrigger>
                     <AccordionContent asChild>
-                      <NavMenu items={menu.items} />
+                      <SidebarNav items={menu.items} />
                     </AccordionContent>
                   </>
                 )}
