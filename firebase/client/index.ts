@@ -6,7 +6,7 @@ import { getToken, initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-
 import { getAnalytics, logEvent as _logEvent } from "firebase/analytics";
 import { useStore } from '@nanostores/react';
 import { $analytics, $app, $appCheck, $auth, $firestore, $loading, $storage, setAnalytics, setApp, setAppCheck, setAuth, setFirestore, setLoading, setStorage } from "./store";
-import { recaptchaSiteKey } from "@/config";
+import { reCaptchaSiteKey } from "@/config";
 import config from "./config";
 
 const useFirebase = () => {
@@ -27,9 +27,9 @@ const useFirebase = () => {
     setApp(app);
   }
 
-  if (!appCheck && recaptchaSiteKey) {
+  if (!appCheck && reCaptchaSiteKey) {
     appCheck = initializeAppCheck(app, {
-      provider: new ReCaptchaV3Provider(recaptchaSiteKey),
+      provider: new ReCaptchaV3Provider(reCaptchaSiteKey),
       isTokenAutoRefreshEnabled: true
     });
     setAppCheck(appCheck);
@@ -74,7 +74,7 @@ const getAppCheckToken = async (forceRefresh: boolean = false) => {
   if (typeof window === 'undefined') {
     throw new Error("App Check is not available on the server side.");
   } else if (!appCheck) {
-    throw new Error("App Check is not initialized. Ensure recaptchaSiteKey is set.");
+    throw new Error("App Check is not initialized. Ensure reCaptchaSiteKey is set.");
   }
   const result = await getToken(appCheck, forceRefresh);
   return result.token;

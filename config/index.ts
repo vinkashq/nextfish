@@ -10,4 +10,4 @@ export const legalBusinessName = process.env.NEXT_PUBLIC_LEGAL_BUSINESS_NAME || 
 export const legalBusinessAddress = process.env.NEXT_PUBLIC_LEGAL_BUSINESS_ADDRESS
 export const legalBusinessCountry = process.env.NEXT_PUBLIC_LEGAL_BUSINESS_COUNTRY
 export const legalContactEmail = process.env.NEXT_PUBLIC_LEGAL_CONTACT_EMAIL
-export const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+export const reCaptchaSiteKey = process.env.NEXT_PUBLIC_RE_CAPTCHA_SITE_KEY;
