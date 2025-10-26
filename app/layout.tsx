@@ -49,7 +49,7 @@ export default function RootLayout({
                     <SignInButton />
                   </div>
                 </header>
-                <div className="flex flex-col gap-4 p-4 pt-0 w-full">
+                <div className="p-4 pt-0 w-full">
                   {children}
                 </div>
                 <footer className="w-full flex gap-4 justify-between text-xs text-neutral-500 py-4 px-6">
