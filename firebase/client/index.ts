@@ -27,7 +27,7 @@ const useFirebase = () => {
     setApp(app);
   }
 
-  if (!appCheck && reCaptchaSiteKey) {
+  if (!appCheck && reCaptchaSiteKey && typeof window !== 'undefined') {
     appCheck = initializeAppCheck(app, {
       provider: new ReCaptchaV3Provider(reCaptchaSiteKey),
       isTokenAutoRefreshEnabled: true
