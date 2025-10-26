@@ -111,7 +111,9 @@ const useCurrentUser = () => {
   useEffect(() => {
     if (isUserLoading) {
       return;
-    } else if (!user) {
+    }
+    
+    if (!user) {
       signInWithServerToken(auth)
         .then((userCredential) => {
           setUser(userCredential.user);
@@ -130,7 +132,7 @@ const useCurrentUser = () => {
   }, [isUserLoading, user]);
 
   return {
-    isLoading: isLoading || isUserLoading || isTokenLoading,
+    isLoading: isLoading || isUserLoading || (isTokenLoading && !user),
     user,
     idTokenVerified,
   };
