@@ -10,8 +10,7 @@ export default function AccountMenu() {
   const { isLoading, user } = useCurrentUser()
 
   if (isLoading) return null
-
-  if (user) <UserMenu user={user} />
+  if (user) return <UserMenu user={user} />
 
   return <GuestMenu />
 }
