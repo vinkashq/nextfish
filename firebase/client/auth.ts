@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Auth, onAuthStateChanged, User, UserCredential } from "firebase/auth"
+import { Auth, onAuthStateChanged, signInWithCustomToken, User, UserCredential } from "firebase/auth"
 import { getServerToken, postRequest } from "@/lib/utils";
 import { baseUrl } from "@/config";
 import { logEvent, useFirebase } from ".";
@@ -9,11 +9,6 @@ const serverTokenUrl = `${baseUrl}/token`
 const serverSignOutUrl = `${baseUrl}/sign-out`
 
 const verifyIdToken = async (user: User) => {
-  if (!idTokenVerificationUrl) {
-    console.error("ID Token verification URL is not set.");
-    return false
-  }
-
   const idToken = await user.getIdToken();
   if (!idToken) {
     console.error("User ID token is not available.")
@@ -49,7 +44,7 @@ const signIn = async (callback: () => Promise<UserCredential>) => {
   return userCredential;
 }
 
-const signInWithServerToken = async (callback: (token: string) => Promise<UserCredential>) => {
+const signInWithServerToken = async (auth: Auth) => {
   if (!serverTokenUrl) {
     throw new Error("Server token URL is not set.");
   }
@@ -60,7 +55,7 @@ const signInWithServerToken = async (callback: (token: string) => Promise<UserCr
   }
 
   return signIn(async () => {
-    return await callback(serverToken);
+    return await signInWithCustomToken(auth, serverToken);
   });
 }
 
@@ -95,6 +90,7 @@ const signOut = async (auth: Auth) => {
 const useCurrentUser = () => {
   const { isLoading, auth } = useFirebase();
   const [isUserLoading, setIsUserLoading] = useState(true);
+  const [isTokenLoading, setIsTokenLoading] = useState(true);
   const [user, setUser] = useState<User | null>(auth?.currentUser || null);
   const [idTokenVerified, setIdTokenVerified] = useState<boolean | null>(null);
 
@@ -113,7 +109,16 @@ const useCurrentUser = () => {
   }, [isLoading, auth, user]);
 
   useEffect(() => {
-    if (isUserLoading || !user || !idTokenVerificationUrl) {
+    if (isUserLoading) {
+      return;
+    } else if (!user) {
+      signInWithServerToken(auth)
+        .then((userCredential) => {
+          setUser(userCredential.user);
+        })
+        .finally(() => {
+          setIsTokenLoading(false);
+        });
       return;
     }
 
@@ -125,7 +130,7 @@ const useCurrentUser = () => {
   }, [isUserLoading, user]);
 
   return {
-    isLoading: isLoading || isUserLoading,
+    isLoading: isLoading || isUserLoading || isTokenLoading,
     user,
     idTokenVerified,
   };
