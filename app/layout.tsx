@@ -11,9 +11,9 @@ import { Metadata } from 'next'
 import Breadcrumb from '@/components/breadcrumb'
 import { BreadcrumbProvider } from '@/context/BreadcrumbContext'
 import Toaster from '@/components/toaster'
-import Logotype from '@/components/logotype'
 import Link from 'next/link'
 import SignInButton from '@/components/sign-in-button'
+import LogotypeSvg from '@/components/logotype/svg'
 
 export const metadata: Metadata = {
   title: {
@@ -43,7 +43,7 @@ export default function RootLayout({
                 <header className="flex w-full h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
                   <div className="flex items-center gap-2 px-4 w-full">
                     <SidebarTrigger className="size-9" mobileIcon="Menu" mobileOnly={true} />
-                    <Link href="/"><Logotype /></Link>
+                    <Link href="/" className="text-muted-foreground"><LogotypeSvg className="h-6" /></Link>
                     <Breadcrumb />
                     <div className='grow'></div>
                     <SignInButton />
