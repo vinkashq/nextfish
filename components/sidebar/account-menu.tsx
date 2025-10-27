@@ -1,16 +1,16 @@
 "use client";
 
 import { useCurrentUser } from "@/firebase/client/auth";
-import GuestMenu from "./guest-menu";
-import UserMenu from "./user-menu";
+import SidebarGuestMenu from "./guest-menu";
+import SidebarUserMenu from "./user-menu";
 import { useFirebase } from "@/firebase/client";
 
-export default function AccountMenu() {
+export default function SidebarAccountMenu() {
   useFirebase()
   const { isLoading, user } = useCurrentUser()
 
   if (isLoading) return null
-  if (user) return <UserMenu user={user} />
+  if (user) return <SidebarUserMenu user={user} />
 
-  return <GuestMenu />
+  return <SidebarGuestMenu />
 }

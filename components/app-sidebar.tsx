@@ -17,7 +17,7 @@ import {
 import { menus } from "@/config/menu"
 import Logomark from "./logomark"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion"
-import AccountMenu from "./account-menu"
+import SidebarAccountMenu from "./sidebar/account-menu"
 import { ComponentProps } from "react"
 import Link from "next/link"
 
@@ -67,7 +67,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         </Accordion>
       </SidebarContent>
       <SidebarFooter>
-        <AccountMenu />
+        <SidebarAccountMenu />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

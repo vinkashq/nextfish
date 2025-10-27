@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
-import { Button } from "./ui/button";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
+import { Button } from "../ui/button";
 
-export default function GuestMenu() {
+export default function SidebarGuestMenu() {
   return (
     <SidebarMenu className="group-data-[collapsible=icon]:hidden">
       <SidebarMenuItem>
