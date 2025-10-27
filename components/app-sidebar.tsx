@@ -33,7 +33,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
             >
               <div className="flex justify-between w-full group-data-[collapsible=icon]:flex-col  group-data-[collapsible=icon]:h-22!">
                 <Link href="/">
-                  <Logomark className="!size-7" />
+                  <Logomark className="!size-8" background="default" />
                 </Link>
                 <SidebarTrigger className="size-9 text-muted-foreground" mobileIcon="X" />
               </div>
