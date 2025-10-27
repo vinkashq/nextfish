@@ -129,7 +129,7 @@ const useCurrentUser = () => {
         console.error("Error checking sign-in verification:", error);
         setIdTokenVerified(false);
       });
-  }, [isUserLoading, user]);
+  }, [auth, isUserLoading, user]);
 
   return {
     isLoading: isLoading || isUserLoading || (isTokenLoading && !user),
