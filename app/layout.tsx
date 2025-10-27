@@ -12,8 +12,8 @@ import Breadcrumb from '@/components/breadcrumb'
 import { BreadcrumbProvider } from '@/context/BreadcrumbContext'
 import Toaster from '@/components/toaster'
 import Link from 'next/link'
-import SignInButton from '@/components/sign-in-button'
 import LogotypeSvg from '@/components/logotype/svg'
+import HeaderAccountMenu from '@/components/header/account-menu'
 
 export const metadata: Metadata = {
   title: {
@@ -41,18 +41,18 @@ export default function RootLayout({
             <SidebarInset className="flex flex-col items-center justify-between min-h-dvh">
               <BreadcrumbProvider>
                 <header className="flex w-full h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
-                  <div className="flex items-center gap-2 px-4 w-full">
+                  <div className="flex items-center gap-2 px-2 md:px-4 w-full">
                     <SidebarTrigger className="size-9" mobileIcon="Menu" mobileOnly={true} />
                     <Link href="/" className="text-muted-foreground"><LogotypeSvg className="h-6" /></Link>
                     <Breadcrumb />
                     <div className='grow'></div>
-                    <SignInButton />
+                    <HeaderAccountMenu />
                   </div>
                 </header>
-                <div className="p-4 pt-0 w-full">
+                <div className="w-full pb-4 px-2 md:px-4">
                   {children}
                 </div>
-                <footer className="w-full flex gap-4 justify-between text-xs text-neutral-500 py-4 px-6">
+                <footer className="w-full flex gap-4 justify-between text-xs text-neutral-500 py-4 px-2 sm:px-4 md:px-6">
                   <div className="text-center lg:text-left">
                     &copy; {new Date().getFullYear()} {legalBusinessName}
                   </div>

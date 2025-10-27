@@ -3,7 +3,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import UserAvatar from "./avatar"
 import Link from "next/link"
 import { Cog, LogOut } from "lucide-react"
-import { useSidebar } from "../ui/sidebar"
 import { Trigger } from "@radix-ui/react-dropdown-menu"
 
 export default function UserDropdownMenu({
@@ -12,7 +11,6 @@ export default function UserDropdownMenu({
 }: React.ComponentProps<typeof Trigger> & {
   user: User
 }) {
-  const { isMobile } = useSidebar()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -20,7 +18,6 @@ export default function UserDropdownMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-        side={isMobile ? "bottom" : "right"}
         align="end"
         sideOffset={4}
       >
