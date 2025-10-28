@@ -3,7 +3,7 @@ import LogotypeSpan from "./logotype/span";
 
 export default function Welcome() {
   return (
-    <div className="flex flex-col items-center justify-center p-24">
+    <div className="flex flex-col items-center justify-center">
       <div className="text-center">
         <Logomark className="w-24 mx-auto" background="default" />
         <h1 className="text-2xl font-bold mt-4">Welcome to <LogotypeSpan /></h1>

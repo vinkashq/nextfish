@@ -40,19 +40,17 @@ export default function RootLayout({
             <AppSidebar />
             <SidebarInset className="flex flex-col items-center justify-between min-h-dvh">
               <BreadcrumbProvider>
-                <header className="flex w-full h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
-                  <div className="flex items-center gap-2 px-2 md:px-4 w-full">
-                    <SidebarTrigger className="size-9" mobileIcon="Menu" mobileOnly={true} />
-                    <Link href="/" className="text-muted-foreground"><LogotypeSvg className="h-6" /></Link>
-                    <Breadcrumb />
-                    <div className='grow'></div>
-                    <HeaderAccountMenu />
-                  </div>
+                <header className="flex w-full h-16 shrink-0 items-center gap-2 px-2 md:px-4 border-b mb-4 transition-[width,height] ease-linear">
+                  <SidebarTrigger className="size-9" mobileIcon="Menu" mobileOnly={true} />
+                  <Link href="/" className="text-muted-foreground"><LogotypeSvg className="h-6" /></Link>
+                  <Breadcrumb />
+                  <div className='grow'></div>
+                  <HeaderAccountMenu />
                 </header>
-                <div className="w-full pb-4 px-2 md:px-4">
+                <div className="w-full h-full flex flex-col justify-center px-2 md:px-4">
                   {children}
                 </div>
-                <footer className="w-full flex gap-4 justify-between text-xs text-neutral-500 py-4 px-2 sm:px-4 md:px-6">
+                <footer className="w-full border-t mt-4 flex gap-4 justify-between text-xs text-neutral-500 py-4 px-2 sm:px-4 md:px-6">
                   <div className="text-center lg:text-left">
                     &copy; {new Date().getFullYear()} {legalBusinessName}
                   </div>

@@ -5,10 +5,9 @@ import { Button } from "../ui/button";
 
 export default function HeaderGuestMenu() {
   return (
-    <Button asChild>
+    <Button size="sm" asChild>
       <Link
         href="/login"
-        type="outline"
         >
         Sign in
       </Link>
