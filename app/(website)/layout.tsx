@@ -31,7 +31,7 @@ export default function WebsiteLayout({
   return (
     <div className="container mx-auto flex flex-col justify-between px-2 md:px-4 lg:px-6 min-h-svh">
       <Header />
-      <main>
+      <main className="my-4">
         {children}
       </main>
       <Footer />

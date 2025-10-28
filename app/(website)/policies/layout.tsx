@@ -6,7 +6,7 @@ export default function PoliciesLayout({
   children: ReactNode
 }) {
   return (
-    <div className="p-4 my-4">
+    <div className="p-4">
       {children}
     </div>
   )
