@@ -1,6 +1,6 @@
 {
   "name": "@vinkas/nextfish",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "repository": "https://github.com/vinkashq/nextfish",
   "author": "Vinkas",
@@ -12,7 +12,9 @@
     "start": "next start",
     "lint": "eslint",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
+    "prepare": "husky",
+    "login": "gcloud auth application-default login",
+    "serve": "firebase emulators:start"
   },
   "dependencies": {
     "@nanostores/react": "^1.0.0",
