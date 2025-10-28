@@ -10,13 +10,13 @@ export default function SidebarGuestMenu() {
       <SidebarMenuItem>
         <SidebarMenuButton size="sm" asChild>
           <Button variant="outline" asChild>
-            <Link href="/signup">Create an account</Link>
+            <Link href="/auth/signup">Create an account</Link>
           </Button>
         </SidebarMenuButton>
       </SidebarMenuItem>
       <SidebarMenuItem className="flex gap-1 my-2 text-xs">
         <span className="">Are you an existing user?</span>
-        <Link href="/login">Sign in</Link>
+        <Link href="/auth/login">Sign in</Link>
       </SidebarMenuItem>
     </SidebarMenu>
   );

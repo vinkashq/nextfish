@@ -1,4 +1,3 @@
-import './globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
@@ -15,7 +14,7 @@ import Link from 'next/link'
 import LogotypeSvg from '@/components/logotype/svg'
 import HeaderAccountMenu from '@/components/header/account-menu'
 import Header from '@/components/header'
-import Footer from '@/components/footer'
+import Footer from "@/components/footer"
 
 export const metadata: Metadata = {
   title: {
@@ -24,24 +23,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function WebsiteLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="[--header-height:calc(--spacing(16))]">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster />
-        </ThemeProvider>
-      </body>
-    </html>
+    <div className="container mx-auto flex flex-col justify-between px-2 md:px-4 lg:px-6 min-h-svh">
+      <Header />
+      <main>
+        {children}
+      </main>
+      <Footer />
+    </div>
   )
 }

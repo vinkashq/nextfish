@@ -9,14 +9,14 @@ export default function HeaderGuestMenu() {
     <div className="flex gap-2">
       <Button size="sm" variant="outline" asChild>
         <Link
-          href="/login"
+          href="/auth/login"
           >
           Sign in
         </Link>
       </Button>
       <Button size="sm" className="hidden lg:flex" asChild>
         <Link
-          href="/signup"
+          href="/auth/signup"
           >
           Create Account
         </Link>

@@ -1,7 +1,7 @@
 export const appName = process.env.NEXT_PUBLIC_APP_NAME || "NextFish";
 export const hostname = process.env.NEXT_PUBLIC_HOSTNAME;
 export const baseUrl = hostname ? `https://${hostname}` : "";
-export const emailLinkLoginUrl = `${baseUrl}/email-link-login`;
+export const emailLinkLoginUrl = `${baseUrl}/auth/email-link-login`;
 export const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL || `${baseUrl}/policies/privacy`;
 export const termsOfServiceUrl = process.env.NEXT_PUBLIC_TERMS_OF_SERVICE_URL || `${baseUrl}/policies/terms`;
 export const primaryColor = process.env.NEXT_THEME_PRIMARY_COLOR || "#171717";

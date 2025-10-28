@@ -4,9 +4,9 @@ import { getServerToken, postRequest } from "@/lib/utils";
 import { baseUrl } from "@/config";
 import { logEvent, useFirebase } from ".";
 
-const idTokenVerificationUrl = `${baseUrl}/verify-id-token`
-const serverTokenUrl = `${baseUrl}/token`
-const serverSignOutUrl = `${baseUrl}/sign-out`
+const idTokenVerificationUrl = `${baseUrl}/api/verify-id-token`
+const serverTokenUrl = `${baseUrl}/api/token`
+const serverSignOutUrl = `${baseUrl}/api/sign-out`
 
 const verifyIdToken = async (user: User) => {
   const idToken = await user.getIdToken();
