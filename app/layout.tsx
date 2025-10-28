@@ -14,6 +14,7 @@ import Toaster from '@/components/toaster'
 import Link from 'next/link'
 import LogotypeSvg from '@/components/logotype/svg'
 import HeaderAccountMenu from '@/components/header/account-menu'
+import Header from '@/components/header'
 
 export const metadata: Metadata = {
   title: {
@@ -29,38 +30,35 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className="[--header-height:calc(--spacing(16))]">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset className="flex flex-col items-center justify-between min-h-dvh">
-              <BreadcrumbProvider>
-                <header className="flex w-full h-16 shrink-0 items-center gap-2 px-2 md:px-4 border-b mb-4 transition-[width,height] ease-linear">
-                  <SidebarTrigger className="size-9" mobileIcon="Menu" mobileOnly={true} />
-                  <Link href="/" className="text-muted-foreground"><LogotypeSvg className="h-6" /></Link>
+          <SidebarProvider className="flex flex-col items-center justify-between min-h-dvh">
+            <Header />
+            <div className="w-full flex flex-1">
+              <AppSidebar />
+              <SidebarInset className="flex flex-col items-center justify-between min-h-[calc(100svh-var(--header-height))]">
+                <BreadcrumbProvider>
                   <Breadcrumb />
-                  <div className='grow'></div>
-                  <HeaderAccountMenu />
-                </header>
-                <div className="w-full h-full flex flex-col justify-center px-2 md:px-4">
-                  {children}
-                </div>
-                <footer className="w-full border-t mt-4 flex gap-4 justify-between text-xs text-neutral-500 py-4 px-2 sm:px-4 md:px-6">
-                  <div className="text-center lg:text-left">
-                    &copy; {new Date().getFullYear()} {legalBusinessName}
+                  <div className="w-full h-full flex flex-col justify-center px-2 md:px-4">
+                    {children}
                   </div>
-                  <div className='flex gap-4'>
-                    <Link href={privacyPolicyUrl}>Privacy</Link>
-                    <Link href={termsOfServiceUrl}>Terms</Link>
-                  </div>
-                </footer>
-              </BreadcrumbProvider>
-            </SidebarInset>
+                  <footer className="w-full border-t mt-4 flex gap-4 justify-between text-xs text-neutral-500 py-4 px-2 sm:px-4 md:px-6">
+                    <div className="text-center lg:text-left">
+                      &copy; {new Date().getFullYear()} {legalBusinessName}
+                    </div>
+                    <div className='flex gap-4'>
+                      <Link href={privacyPolicyUrl}>Privacy</Link>
+                      <Link href={termsOfServiceUrl}>Terms</Link>
+                    </div>
+                  </footer>
+                </BreadcrumbProvider>
+              </SidebarInset>
+            </div>
           </SidebarProvider>
           <Toaster />
         </ThemeProvider>

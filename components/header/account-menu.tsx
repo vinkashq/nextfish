@@ -8,10 +8,9 @@ import { useSidebar } from "../ui/sidebar";
 
 export default function HeaderAccountMenu() {
   useFirebase()
-  const { isMobile } = useSidebar()
   const { isLoading, user } = useCurrentUser()
 
-  if (!isMobile || isLoading) return null
+  if (isLoading) return null
   if (user) return <HeaderUserMenu user={user} />
 
   return <HeaderGuestMenu />
