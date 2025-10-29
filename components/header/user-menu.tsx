@@ -9,7 +9,7 @@ export default function HeaderUserMenu({
 }) {
   return (
     <UserDropdownMenu user={user}>
-      <div>
+      <div className="cursor-pointer">
         <UserAvatar user={user} />
       </div>
     </UserDropdownMenu>
