@@ -8,10 +8,12 @@ export default function HeaderUserMenu({
   user: User
 }) {
   return (
-    <UserDropdownMenu user={user}>
-      <div className="cursor-pointer">
-        <UserAvatar user={user} />
-      </div>
-    </UserDropdownMenu>
+    <div className="flex gap-4">
+      <UserDropdownMenu user={user}>
+        <div className="cursor-pointer">
+          <UserAvatar user={user} />
+        </div>
+      </UserDropdownMenu>
+    </div>
   )
 }
