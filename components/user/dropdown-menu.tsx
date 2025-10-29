@@ -4,6 +4,8 @@ import UserAvatar from "./avatar"
 import Link from "next/link"
 import { Cog, LogOut } from "lucide-react"
 import { Trigger } from "@radix-ui/react-dropdown-menu"
+import { signOut } from "@/firebase/client/auth"
+import { useFirebase } from "@/firebase/client"
 
 export default function UserDropdownMenu({
   children,
@@ -11,6 +13,11 @@ export default function UserDropdownMenu({
 }: React.ComponentProps<typeof Trigger> & {
   user: User
 }) {
+  const { auth } = useFirebase()
+  const handleLogOut = async () => {
+    await signOut(auth)
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -40,7 +47,7 @@ export default function UserDropdownMenu({
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogOut}>
           <LogOut />
           Log out
         </DropdownMenuItem>
