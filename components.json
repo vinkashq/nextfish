@@ -18,5 +18,7 @@
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "registries": {}
+  "registries": {
+    "@vinkas": "https://ui.vinkas.com/r/{name}.json"
+  }
 }
