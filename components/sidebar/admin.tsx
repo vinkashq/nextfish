@@ -8,7 +8,7 @@ import {
   SidebarGroupLabel,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { menus } from "@/config/menu"
+import { menus } from "@/config/menu/admin"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion"
 import { ComponentProps } from "react"
 

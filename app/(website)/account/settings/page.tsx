@@ -43,7 +43,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="flex flex-col gap-4 mx-auto max-w-2xl min-h-svh">
+    <div className="flex flex-col gap-4 mx-auto max-w-2xl grow">
       <BreadcrumbHeading text="Settings" />
 
       <h1 className="scroll-m-20 text-left text-4xl font-extrabold tracking-tight text-balance">
