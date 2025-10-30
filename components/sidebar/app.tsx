@@ -9,10 +9,10 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { menus } from "@/config/menu"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion"
 import { ComponentProps } from "react"
 
-export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
+export default function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar className="sticky top-(--header-height) h-[calc(100svh-var(--header-height))]!" collapsible="icon" {...props}>
       <SidebarContent>

@@ -1,8 +1,7 @@
 import { auth } from "@/firebase/server";
+import { sessionCookie } from "@/lib/const";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
-const sessionCookie = "__session"
 
 export async function GET(request: Request) {
   const cookieStore = await cookies()
@@ -15,7 +14,7 @@ export async function GET(request: Request) {
   }
 
   // Verify the session cookie and decode its contents
-  const decodedIdToken = await auth.verifySessionCookie(cookie.value);
+  const decodedIdToken = await auth.verifySessionCookie(cookie.value, true);
   if (!decodedIdToken) {
     cookieStore.set(sessionCookie, "", {
       maxAge: 0,

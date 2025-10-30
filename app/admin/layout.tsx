@@ -1,4 +1,4 @@
-import AppSidebar from "@/components/sidebar/app"
+import AdminSidebar from "@/components/sidebar/admin"
 import {
   SidebarInset,
   SidebarProvider,
@@ -11,21 +11,21 @@ import Footer from "@/components/footer"
 
 export const metadata: Metadata = {
   title: {
-    default: "App console",
-    template: `%s - App console`,
+    default: "Admin console",
+    template: `%s - Admin console`,
   },
 };
 
-export default function AppLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <SidebarProvider className="flex flex-col items-center justify-between min-h-dvh">
-      <Header />
+      <Header hasSidebar={true} />
       <div className="w-full flex flex-1">
-        <AppSidebar />
+        <AdminSidebar />
         <SidebarInset className="flex flex-col items-center justify-between min-h-[calc(100svh-var(--header-height))]">
           <BreadcrumbProvider>
             <Breadcrumb />
