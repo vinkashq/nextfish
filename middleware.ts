@@ -67,6 +67,10 @@ export default async function middleware(request: NextRequest) {
     }
   }
 
+  if (!response) {
+    response = NextResponse.next()
+  }
+
   if (userId) {
     response.headers.set('x-user-id', userId)
   }
