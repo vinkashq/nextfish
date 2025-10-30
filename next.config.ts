@@ -12,10 +12,57 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
-  async redirects() {
-    return [];
-  },
-  webpack(config) {
+  headers: async () => [{
+    source: '/account/:path*',
+    headers: [
+      {
+        key: 'Cache-Control',
+        value: 'no-store, no-cache, must-revalidate, private'
+      },
+      {
+        key: 'X-Robots-Tag',
+        value: 'noindex, nofollow'
+      }
+    ]
+  }, {
+    source: '/app/:path*',
+    headers: [
+      {
+        key: 'Cache-Control',
+        value: 'no-store, no-cache, must-revalidate, private'
+      },
+      {
+        key: 'X-Robots-Tag',
+        value: 'noindex, nofollow'
+      }
+    ]
+  }, {
+    source: '/api/:path*',
+    headers: [
+      {
+        key: 'Cache-Control',
+        value: 'no-store, no-cache, must-revalidate, private'
+      },
+      {
+        key: 'X-Robots-Tag',
+        value: 'noindex, nofollow'
+      }
+    ]
+  }, {
+    source: '/admin/:path*',
+    headers: [
+      {
+        key: 'Cache-Control',
+        value: 'no-store, no-cache, must-revalidate, private'
+      },
+      {
+        key: 'X-Robots-Tag',
+        value: 'noindex, nofollow'
+      }
+    ]
+  }],
+  redirects: async () => [],
+  webpack: (config) => {
     withPluginRoutes('auth');
     return config;
   },
