@@ -3,17 +3,22 @@ import { sessionCookie } from './lib/const'
 import { auth } from './firebase/server'
 
 const adminPaths = [
-  '/admin'
+  '/admin',
 ]
 
 const userPaths = [
   '/app',
-  '/account'
+  '/account',
+  '/api/sign-out',
 ]
 
 const pathsRequireAuth = [
   ...adminPaths,
   ...userPaths
+]
+
+const pathsToCheckRevokedIdToken = [
+  '/api/token'
 ]
  
 export default async function middleware(request: NextRequest) {
@@ -37,7 +42,8 @@ export default async function middleware(request: NextRequest) {
   const cookie = request.cookies.get(sessionCookie)
   if (cookie) {
     try {
-       const decodedIdToken = await auth.verifySessionCookie(cookie.value)
+       const checkRevoked = pathsToCheckRevokedIdToken.some(path => pathname.startsWith(path))
+       const decodedIdToken = await auth.verifySessionCookie(cookie.value, checkRevoked)
        userId = decodedIdToken.uid
     } catch {
       deleteSessionCookie = true
