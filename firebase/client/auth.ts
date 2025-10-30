@@ -8,16 +8,23 @@ const idTokenVerificationUrl = `${baseUrl}/api/verify-id-token`
 const serverTokenUrl = `${baseUrl}/api/token`
 const serverSignOutUrl = `${baseUrl}/api/sign-out`
 
-const verifyIdToken = async (user: User) => {
+const verifyIdToken = async (auth: Auth, user: User) => {
   const idToken = await user.getIdToken();
   if (!idToken) {
     console.error("User ID token is not available.")
     return false
   }
 
-  const response = await postRequest(idTokenVerificationUrl, { idToken })
-  if (!response.ok) {
-    console.error('Failed to verify ID token:', response.statusText)
+  try {
+    const response = await postRequest(idTokenVerificationUrl, { idToken })
+    if (!response.ok) {
+      console.error('Failed to verify ID token:', response.statusText)
+      await signOutOnClient(auth, user.uid)
+      return false
+    }
+  } catch (error) {
+    console.error('Error verifying ID token:', error)
+    await signOutOnClient(auth, user.uid)
     return false
   }
 
@@ -63,29 +70,38 @@ const signOut = async (auth: Auth) => {
   const uid = auth.currentUser?.uid;
   let redirectUrl = baseUrl
 
-  if (serverSignOutUrl) {
-    const response = await postRequest(serverSignOutUrl)
+  redirectUrl = await signOutOnServer(uid, redirectUrl)
+  await signOutOnClient(auth, uid)
 
-    if (response.ok) {
-      const data = await response.json();
-      if (data.status === 'success') {
-        logEvent('server_signed_out', {
-          uid
-        });
-        redirectUrl = data.redirectUrl || redirectUrl;
-      }
+  window.location.href = redirectUrl;
+  return true;
+};
+
+const signOutOnServer = async (uid: string, redirectUrl: string) => {
+  if (!serverSignOutUrl) return
+
+  const response = await postRequest(serverSignOutUrl)
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data.status === 'success') {
+      logEvent('server_signed_out', {
+        uid
+      });
+      redirectUrl = data.redirectUrl || redirectUrl;
     }
   }
 
+  return redirectUrl
+}
+
+const signOutOnClient = async (auth: Auth, uid: string) => {
   await auth.signOut();
 
   logEvent('signed_out', {
     uid
   });
-
-  window.location.href = redirectUrl;
-  return true;
-};
+}
 
 const useCurrentUser = () => {
   const { isLoading, auth } = useFirebase();
@@ -124,7 +140,7 @@ const useCurrentUser = () => {
       return;
     }
 
-    verifyIdToken(user)
+    verifyIdToken(auth, user)
       .then(setIdTokenVerified).catch((error) => {
         console.error("Error checking sign-in verification:", error);
         setIdTokenVerified(false);
