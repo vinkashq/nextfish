@@ -1,5 +1,9 @@
-export default function Page() {
+import { getBudget } from "@/lib/gcloud/budget"
+
+export default async function Page() {
+  const budget = await getBudget()
+
   return (
-    <div>Admin</div>
+    <div>{budget.amount.specifiedAmount.units.toString()} {budget.amount.specifiedAmount.currencyCode}</div>
   )
 }
