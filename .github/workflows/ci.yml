@@ -2,6 +2,7 @@ name: CI
 
 permissions:
   contents: read
+  actions: write
 
 on:
   push:
@@ -23,7 +24,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
       - name: Install dependencies
         run: pnpm install
       - name: Upload artifact
@@ -49,7 +50,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
       - name: Run lint
         run: pnpm lint
 
@@ -69,7 +70,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
       - name: Build project
         run: pnpm build
         env:
