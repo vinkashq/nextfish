@@ -16,15 +16,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - name: Install dependencies
         run: pnpm install
       - name: Upload artifact
@@ -43,14 +43,14 @@ jobs:
         with:
           name: project-with-dependencies
           path: .
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
       - name: Run lint
         run: pnpm lint
 
@@ -63,14 +63,14 @@ jobs:
         with:
           name: project-with-dependencies
           path: .
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
       - name: Build project
         run: pnpm build
         env:
