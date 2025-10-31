@@ -54,6 +54,14 @@ jobs:
           cache: 'pnpm'
       - name: Add node_modules/.bin to PATH
         run: echo "$(pwd)/node_modules/.bin" >> $GITHUB_PATH
+      - name: Debug Environment
+        run: |
+          echo "--- PATH ---"
+          echo $PATH
+          echo "--- node_modules/.bin contents ---"
+          ls -la node_modules/.bin
+          echo "--- which eslint ---"
+          which eslint || echo "eslint not found in PATH"
       - name: Run lint
         run: pnpm lint
 
