@@ -1,12 +1,12 @@
 import { Menu } from "@/types/menu"
-import { Home } from "lucide-react"
+import { LayoutDashboard } from "lucide-react"
 
 export const defaultMenu: Menu = {
   title: "Admin Console",
   items: [{
     title: "Dashboard",
     url: "/",
-    icon: Home,
+    icon: LayoutDashboard,
   }]
 }
 
