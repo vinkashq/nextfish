@@ -27,10 +27,18 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Upload artifact
+      - name: Archive node_modules
+        run: tar -czf node_modules.tar.gz node_modules
+      - name: Upload node_modules artifact
         uses: actions/upload-artifact@v4
         with:
-          name: project-with-dependencies
+          name: node_modules
+          path: node_modules.tar.gz
+          retention-days: 1
+      - name: Upload project artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: project-files
           path: .
           retention-days: 1
 
@@ -38,11 +46,18 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
+      - name: Download project artifact
         uses: actions/download-artifact@v4
         with:
-          name: project-with-dependencies
+          name: project-files
           path: .
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: .
+      - name: Extract node_modules
+        run: tar -xzf node_modules.tar.gz
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -52,16 +67,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - name: Add node_modules/.bin to PATH
-        run: echo "$(pwd)/node_modules/.bin" >> $GITHUB_PATH
-      - name: Debug Environment
-        run: |
-          echo "--- PATH ---"
-          echo $PATH
-          echo "--- node_modules/.bin contents ---"
-          ls -la node_modules/.bin
-          echo "--- which eslint ---"
-          which eslint || echo "eslint not found in PATH"
       - name: Run lint
         run: pnpm lint
 
@@ -69,11 +74,18 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
+      - name: Download project artifact
         uses: actions/download-artifact@v4
         with:
-          name: project-with-dependencies
+          name: project-files
           path: .
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: .
+      - name: Extract node_modules
+        run: tar -xzf node_modules.tar.gz
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -83,8 +95,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - name: Add node_modules/.bin to PATH
-        run: echo "$(pwd)/node_modules/.bin" >> $GITHUB_PATH
       - name: Build project
         run: pnpm build
         env:
