@@ -2,7 +2,6 @@ name: CI
 
 permissions:
   contents: read
-  actions: write
 
 on:
   push:
@@ -27,37 +26,13 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Archive node_modules
-        run: tar -czf node_modules.tar.gz node_modules
-      - name: Upload node_modules artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: node_modules
-          path: node_modules.tar.gz
-          retention-days: 1
-      - name: Upload project artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: project-files
-          path: .
-          retention-days: 1
 
   lint:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Download project artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: project-files
-          path: .
-      - name: Download node_modules artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
-      - name: Extract node_modules
-        run: tar -xzf node_modules.tar.gz
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -67,6 +42,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
       - name: Run lint
         run: pnpm lint
 
@@ -74,18 +51,8 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      - name: Download project artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: project-files
-          path: .
-      - name: Download node_modules artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
-      - name: Extract node_modules
-        run: tar -xzf node_modules.tar.gz
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -95,6 +62,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
       - name: Build project
         run: pnpm build
         env:
