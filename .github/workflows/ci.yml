@@ -1,7 +1,7 @@
 name: CI
 
 permissions:
-  contents: read
+  contents: write
 
 on:
   push:
@@ -76,3 +76,21 @@ jobs:
           NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
       - name: Run tests
         run: pnpm test
+
+  tests_passed:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      - name: Push to tests-passed branch
+        run: |
+          git checkout -B tests-passed
+          git push -f origin tests-passed
