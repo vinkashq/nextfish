@@ -21,7 +21,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   nextPageToken?: string
-  onLoadMore: (token?: string) => void
+  onLoadMore?: (token?: string) => void
 }
 
 export function DataTable<TData, TValue>({
@@ -36,6 +36,24 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   })
+
+  const LoadMoreButton = () => {
+    if (!nextPageToken) return
+
+    const loadMore = () => onLoadMore && onLoadMore(nextPageToken)
+
+    return (
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={loadMore}
+        >
+          Load More
+        </Button>
+      </div>
+    )
+  }
 
   return (
     <div className="my-4">
@@ -83,17 +101,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {nextPageToken && (
-        <div className="flex items-center justify-end space-x-2 py-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onLoadMore(nextPageToken)}
-          >
-            Load More
-          </Button>
-        </div>
-      )}
+      <LoadMoreButton />
     </div>
   )
 }
