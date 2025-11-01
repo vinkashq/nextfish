@@ -21,7 +21,7 @@ export default function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>)
             <AccordionItem key={index} value={index.toString()}>
               <SidebarGroup>
                 {menus.length === 1 && (
-                  <SidebarNav items={menu.items} />
+                  <SidebarNav baseUrl={menu.baseUrl} items={menu.items} />
                 )}
                 {menus.length > 1 && (
                   <>
@@ -31,7 +31,7 @@ export default function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>)
                       </SidebarGroupLabel>
                     </AccordionTrigger>
                     <AccordionContent asChild>
-                      <SidebarNav items={menu.items} />
+                      <SidebarNav baseUrl={menu.baseUrl} items={menu.items} />
                     </AccordionContent>
                   </>
                 )}
