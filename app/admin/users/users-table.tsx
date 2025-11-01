@@ -4,7 +4,7 @@ import { User } from '@/types';
 import { useState, useEffect } from 'react';
 import { listUsers, deleteUser } from '@/app/actions/users';
 import { columns } from './columns';
-import { DataTable } from './data-table';
+import { DataTable } from '@/components/data-table';
 
 export default function UsersTable() {
   const [users, setUsers] = useState<User[]>([]);
