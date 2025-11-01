@@ -16,8 +16,10 @@ import { MenuItem } from "@/types/menu-item"
 import Link from "next/link"
 
 export default function SidebarNavItem({
+  baseUrl,
   item,
 }: {
+  baseUrl: string
   item: MenuItem
 }) {
   const hasSubMenus = (item.items?.length || 0) > 0;
@@ -42,7 +44,7 @@ export default function SidebarNavItem({
               {item.items?.map((subItem) => (
                 <SidebarMenuSubItem key={subItem.title}>
                   <SidebarMenuSubButton asChild>
-                    <a href={subItem.url}>
+                    <a href={ `${baseUrl}${subItem.url}` }>
                       <span>{subItem.title}</span>
                     </a>
                   </SidebarMenuSubButton>
@@ -58,7 +60,7 @@ export default function SidebarNavItem({
   return (
     <SidebarMenuItem>
       <SidebarMenuButton tooltip={item.title} asChild>
-        <Link href={item.url}>
+        <Link href={ `${baseUrl}${item.url}` }>
           {item.icon && <item.icon />}
           <span>{item.title}</span>
         </Link>

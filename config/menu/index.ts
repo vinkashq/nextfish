@@ -3,6 +3,7 @@ import { Home } from "lucide-react"
 
 export const defaultMenu: Menu = {
   title: "Platform",
+  baseUrl: "/",
   items: [{
     title: "Home",
     url: "/",

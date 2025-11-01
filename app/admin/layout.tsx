@@ -29,7 +29,7 @@ export default function AdminLayout({
         <SidebarInset className="flex flex-col items-center justify-between min-h-[calc(100svh-var(--header-height))]">
           <BreadcrumbProvider>
             <Breadcrumb />
-            <div className="w-full h-full flex flex-col justify-center px-2 md:px-4">
+            <div className="w-full h-full flex flex-col justify-center px-2 md:px-4 pt-4">
               {children}
             </div>
             <Footer />
