@@ -19,11 +19,6 @@ export default function UsersTable() {
     });
   }, []);
 
-  const handleDelete = async (uid: string) => {
-    await deleteUser(uid);
-    setUsers(users.filter((user) => user.uid !== uid));
-  };
-
   const handleLoadMore = (token?: string) => {
     listUsers(token).then(({ users, nextPageToken }) => {
       setUsers((prevUsers) => [...prevUsers, ...users]);
@@ -33,7 +28,7 @@ export default function UsersTable() {
 
   return (
     <DataTable
-      columns={columns(handleDelete)}
+      columns={columns()}
       data={users}
       nextPageToken={nextPageToken}
       onLoadMore={handleLoadMore}

@@ -9,12 +9,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
 
-export const columns = (handleDelete: (uid: string) => void): ColumnDef<User>[] => [
+export const columns = (): ColumnDef<User>[] => [
   {
     accessorKey: "uid",
     header: "UID",
@@ -43,10 +42,6 @@ export const columns = (handleDelete: (uid: string) => void): ColumnDef<User>[] 
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href={`/admin/users/${user.uid}/edit`}>Edit</Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleDelete(user.uid)}>
-              Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
