@@ -3,16 +3,25 @@ import Link from 'next/link';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { Button } from '@/components/ui/button';
 
-export default async function Page({ params }: { params: { userId: string } }) {
-  const user = await getUser(params.userId);
+type PageProps = Promise<{
+    userId: string;
+}>
 
-  const handleDelete = async (uid: string) => {
-    await deleteUser(uid);
-  };
+export default async function Page(params: PageProps) {
+  const { userId } = await params;
+  if (!userId) {
+    return <div>User not found</div>;
+  }
+
+  const user = await getUser(userId);
 
   if (!user) {
     return <div>User not found</div>;
   }
+
+  const handleDelete = async () => {
+    await deleteUser(user.uid);
+  };
 
   return (
     <div>
@@ -38,7 +47,7 @@ export default async function Page({ params }: { params: { userId: string } }) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction onClick={() => handleDelete(user.uid)} asChild>
+            <AlertDialogAction onClick={handleDelete} asChild>
               <Button variant="destructive">Yes, Delete</Button>
             </AlertDialogAction>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
