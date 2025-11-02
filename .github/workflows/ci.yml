@@ -48,7 +48,7 @@ jobs:
         run: pnpm lint
 
   test:
-    needs: lint
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -78,7 +78,7 @@ jobs:
         run: pnpm test
 
   tests_passed:
-    needs: test
+    needs: [lint, test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
