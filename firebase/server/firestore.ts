@@ -15,11 +15,11 @@ const findDoc = async (collection: string, key: string, value: any) => {
 }
 const getData = async (collectionPath: string, docPath: string) => {
   const doc = await getDoc(collectionPath, docPath)
-  return doc?.data
+  return doc?.data()
 }
 const findData = async (collection: string, key: string, value: any) => {
   const doc = await findDoc(collection, key, value)
-  return doc?.data
+  return doc?.data()
 }
 
 export {
