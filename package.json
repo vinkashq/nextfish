@@ -16,7 +16,8 @@
     "prepare": "husky",
     "login": "gcloud auth application-default login",
     "serve": "firebase emulators:start",
-    "playwright": "playwright test tests/playwright"
+    "playwright": "playwright test tests/playwright",
+    "playwright:install": "playwright install --with-deps"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.22.0",
