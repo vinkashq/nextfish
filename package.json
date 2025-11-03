@@ -11,12 +11,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest",
+    "test": "jest tests/jest",
     "test:watch": "jest --watch",
     "prepare": "husky",
     "login": "gcloud auth application-default login",
     "serve": "firebase emulators:start",
-    "playwright": "playwright"
+    "playwright": "playwright test tests/playwright"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.22.0",

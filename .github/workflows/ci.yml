@@ -109,7 +109,7 @@ jobs:
       - name: Start server
         run: pnpm start &
       - name: Run Playwright tests
-        run: pnpm playwright test
+        run: pnpm playwright
 
   tests_passed:
     needs: [lint, test, e2e-test]
