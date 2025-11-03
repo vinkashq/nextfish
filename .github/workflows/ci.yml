@@ -104,14 +104,12 @@ jobs:
           NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}
           NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
+      - name: Install Playwright browsers
+        run: pnpm playwright install --with-deps
       - name: Start server
         run: pnpm start &
-      - name: Wait for server
-        run: sleep 10
-      - name: Test home page
-        run: curl http://localhost:3000 | grep "Welcome"
-      - name: Test health check
-        run: curl http://localhost:3000/api/health | grep '{"status":"ok"}'
+      - name: Run Playwright tests
+        run: pnpm playwright test
 
   tests_passed:
     needs: [lint, test, e2e-test]
