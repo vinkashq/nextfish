@@ -62,7 +62,8 @@ const nextConfig: NextConfig = {
     ]
   }],
   redirects: async () => [],
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
+    if (isServer) config.externals.push('express')
     withPluginRoutes('auth');
     return config;
   },
