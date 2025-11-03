@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
     resolveAlias: {
-      express: false as any,
+      express: path.join(process.cwd(), 'empty-module.js')
     },
   },
   transpilePackages: [
