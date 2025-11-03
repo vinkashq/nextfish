@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  transpilePackages: [
+    '@genkit-ai/core',
+    '@genkit-ai/ai',
+    '@genkit-ai/googleai',
+    '@opentelemetry/instrumentation',
+  ],
   headers: async () => [{
     source: '/account/:path*',
     headers: [
