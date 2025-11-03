@@ -9,12 +9,10 @@ const app = initializeApp()
 const auth = getAuth(app)
 const firestore = getFirestore(app)
 const storage = getStorage(app)
-const ai = genkit(genkitConfig)
 
 export {
   app,
   auth,
   firestore,
   storage,
-  ai,
 }
