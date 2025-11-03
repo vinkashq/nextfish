@@ -12,15 +12,27 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
+import { InputCopyable } from "@/components/ui/input-copyable"
 
 export const columns = (): ColumnDef<User>[] => [
   {
-    accessorKey: "uid",
-    header: "UID",
+    accessorKey: "displayName",
+    header: "Name",
   },
   {
     accessorKey: "email",
     header: "Email",
+  },
+  {
+    accessorKey: "uid",
+    header: "UID",
+    cell: ({ row }) => {
+      const user = row.original
+
+      return (
+        <InputCopyable value={user.uid} className="w-48 border-none shadow-none" />
+      )
+    }
   },
   {
     id: "actions",
