@@ -11,6 +11,9 @@ const withPluginRoutes = (pluginName) => {
 const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
+    resolveAlias: {
+      express: false as any,
+    },
   },
   transpilePackages: [
     '@genkit-ai/core',
