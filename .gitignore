@@ -45,5 +45,5 @@ firebase-debug.log
 pglite-debug.log
 
 .firebaserc
-app/(plugins)/*
-!app/(plugins)/.gitkeep
+src/app/(plugins)/*
+!src/app/(plugins)/.gitkeep

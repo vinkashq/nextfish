@@ -63,7 +63,7 @@ const nextConfig: NextConfig = {
   }],
   redirects: async () => [],
   webpack: (config) => {
-    withPluginRoutes('auth');
+    // withPluginRoutes('your-plugin-directory-name');
     return config;
   },
 };
