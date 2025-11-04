@@ -35,6 +35,7 @@ export default async function middleware(request: NextRequest) {
     accept.includes('application/json') ||
     pathname.startsWith('/api') ||
     isJsonRequest
+  // eslint-disable-next-line no-unused-vars
   const wantsHTML =
     !wantsJSON &&
     (accept.includes('text/html') || accept === '*/*' || accept === '')

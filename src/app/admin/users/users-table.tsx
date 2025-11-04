@@ -2,7 +2,7 @@
 
 import { User } from '@/types';
 import { useState, useEffect } from 'react';
-import { listUsers, deleteUser } from '@/app/actions/users';
+import { listUsers } from '@/app/actions/users';
 import { columns } from './columns';
 import { DataTable } from '@/components/data-table';
 

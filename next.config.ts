@@ -2,6 +2,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import type { NextConfig } from "next";
 
+// eslint-disable-next-line no-unused-vars
 const withPluginRoutes = (pluginName) => {
   const pluginRoutes = path.join(process.cwd(), 'plugins', pluginName, 'routes');
   const appRoutes = path.join(process.cwd(), 'src', 'app', '(plugins)', pluginName);

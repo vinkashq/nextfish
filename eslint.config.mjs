@@ -11,6 +11,13 @@ const eslintConfig = defineConfig([
     'src/hooks/use-mobile.ts',
     'src/components/ui/**',
   ]),
+  {
+    "rules": {
+      "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+      "prefer-const": "warn",
+    }
+  }
 ])
  
 export default eslintConfig

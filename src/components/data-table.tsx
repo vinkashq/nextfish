@@ -21,6 +21,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   nextPageToken?: string
+  // eslint-disable-next-line no-unused-vars
   onLoadMore?: (token?: string) => void
 }
 
@@ -30,6 +31,7 @@ export function DataTable<TData, TValue>({
   nextPageToken,
   onLoadMore,
 }: DataTableProps<TData, TValue>) {
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

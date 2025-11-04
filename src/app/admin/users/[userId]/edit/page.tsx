@@ -5,7 +5,7 @@ type PageProps = Promise<{
     userId: string;
 }>
 
-export default async function Page({ params }: { params: { userId: string } }) {
+export default async function Page(params: PageProps) {
   const { userId } = await params;
   if (!userId) {
     return <div>User not found</div>;

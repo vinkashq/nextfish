@@ -36,6 +36,7 @@ describe('postRequest', () => {
   it('sends a POST request with the correct headers and body', async () => {
     fetchMock.mockResponseOnce(JSON.stringify({ success: true }));
 
+    // eslint-disable-next-line no-unused-vars
     const response = await postRequest('/test-url', { data: 'test-data' });
 
     expect(fetchMock.mock.calls.length).toEqual(1);

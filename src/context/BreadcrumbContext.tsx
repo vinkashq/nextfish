@@ -3,6 +3,7 @@ import { createContext, useState, useContext, ReactNode } from "react";
 
 const BreadcrumbContext = createContext({
   heading: "",
+  // eslint-disable-next-line no-unused-vars
   setHeading: (heading: string) => {},
 });
 

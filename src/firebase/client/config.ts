@@ -1,4 +1,4 @@
-import { projectId, storageBucket } from "../const";
+import { projectId, storageBucket } from "@/firebase/const";
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

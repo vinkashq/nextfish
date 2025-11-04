@@ -1,8 +1,7 @@
 "use client"
 
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { ButtonGroup } from "../ui/button-group";
+import Link from "next/link"
+import { Button } from "../ui/button"
 
 export default function HeaderGuestMenu() {
   return (
