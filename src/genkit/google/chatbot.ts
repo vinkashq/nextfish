@@ -9,6 +9,5 @@ const defaultChatbotConfig = {
 }
 
 const googleChatbot = genkit(defaultChatbotConfig)
-googleChatbot.chat()
 
 export default googleChatbot
