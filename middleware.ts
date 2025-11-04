@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server'
-import { sessionCookie } from './lib/const'
-import { auth } from './firebase/server'
+import { sessionCookie } from './src/lib/const'
+import { auth } from './src/firebase/server'
 
 const adminPaths = [
   '/admin',

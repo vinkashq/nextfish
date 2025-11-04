@@ -1,6 +1,6 @@
 import type { Plugin } from '@/types/plugin';
+import { plugins } from './registry';
 
 export async function loadPlugins(): Promise<Plugin[]> {
-  const plugins = await import('@/plugins/registry').then(m => m.plugins);
   return plugins;
 }
