@@ -8,8 +8,8 @@ const eslintConfig = defineConfig([
     'out/**',
     'build/**',
     'next-env.d.ts',
-    'hooks/use-mobile.ts',
-    'components/ui/**',
+    'src/hooks/use-mobile.ts',
+    'src/components/ui/**',
   ]),
 ])
  
