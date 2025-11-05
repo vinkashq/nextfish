@@ -20,7 +20,7 @@
     "playwright:install": "playwright install --with-deps"
   },
   "dependencies": {
-    "@genkit-ai/googleai": "^1.22.0",
+    "@genkit-ai/google-genai": "^1.22.0",
     "@genkit-ai/next": "^1.22.0",
     "@hookform/resolvers": "^5.2.2",
     "@nanostores/react": "^1.0.0",

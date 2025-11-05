@@ -8,7 +8,7 @@ importers:
 
   .:
     dependencies:
-      '@genkit-ai/googleai':
+      '@genkit-ai/google-genai':
         specifier: ^1.22.0
         version: 1.22.0(genkit@1.22.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.5.0)(firebase@12.5.0))
       '@genkit-ai/next':
@@ -911,8 +911,8 @@ packages:
     peerDependencies:
       genkit: ^1.22.0
 
-  '@genkit-ai/googleai@1.22.0':
-    resolution: {integrity: sha512-6GTfrsv2acRWlXcvi8jqH044tG/eslMQCH1wxpA//wzTnsnht5f4SJ3isKU3gcmyQtoYWiaUN8/F7OYqkIYHcw==}
+  '@genkit-ai/google-genai@1.22.0':
+    resolution: {integrity: sha512-Bdzjy15zWBt5GGRmzjSh2jp73fyFt3X0la9jvECmxzn1zjVl68/OU3WJAoAD+z3N4F258NmXzsMh6t5QA9INFQ==}
     peerDependencies:
       genkit: ^1.22.0
 
@@ -984,10 +984,6 @@ packages:
   '@google-cloud/storage@7.17.2':
     resolution: {integrity: sha512-6xN0KNO8L/LIA5zu3CJwHkJiB6n65eykBLOb0E+RooiHYgX8CSao6lvQiKT9TBk2gL5g33LL3fmhDodZnt56rw==}
     engines: {node: '>=14'}
-
-  '@google/generative-ai@0.24.1':
-    resolution: {integrity: sha512-MqO+MLfM6kjxcKoy0p1wRzG3b4ZZXtPI+z2IE26UogS2Cm/XHO+7gGRBh6gcJsOiIVoH93UwKvW4HdgiOZCy9Q==}
-    engines: {node: '>=18.0.0'}
 
   '@grpc/grpc-js@1.14.0':
     resolution: {integrity: sha512-N8Jx6PaYzcTRNzirReJCtADVoq4z7+1KQ4E70jTg/koQiMoUSN1kbNjPOqpPbhMFhfU1/l7ixspPl8dNY+FoUg==}
@@ -7096,12 +7092,10 @@ snapshots:
       - supports-color
     optional: true
 
-  '@genkit-ai/googleai@1.22.0(genkit@1.22.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.5.0)(firebase@12.5.0))':
+  '@genkit-ai/google-genai@1.22.0(genkit@1.22.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.5.0)(firebase@12.5.0))':
     dependencies:
-      '@google/generative-ai': 0.24.1
       genkit: 1.22.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.5.0)(firebase@12.5.0)
       google-auth-library: 9.15.1
-      node-fetch: 3.3.2
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -7251,8 +7245,6 @@ snapshots:
       - encoding
       - supports-color
     optional: true
-
-  '@google/generative-ai@0.24.1': {}
 
   '@grpc/grpc-js@1.14.0':
     dependencies:
@@ -10168,7 +10160,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.0(jiti@2.6.1)):
+  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.0(jiti@2.6.1)))(eslint@9.39.0(jiti@2.6.1)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -10190,7 +10182,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.39.0(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.0(jiti@2.6.1))
+      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.0(jiti@2.6.1)))(eslint@9.39.0(jiti@2.6.1))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
