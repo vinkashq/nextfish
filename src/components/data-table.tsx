@@ -15,7 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button"
+import { MoreHorizontal } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -23,6 +25,26 @@ interface DataTableProps<TData, TValue> {
   nextPageToken?: string
   // eslint-disable-next-line no-unused-vars
   onLoadMore?: (token?: string) => void
+}
+
+export function DataTableActionsMenu({
+  children,
+  ...props
+}: React.ComponentProps<typeof DropdownMenu>) {
+  return (
+    <DropdownMenu {...props}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        {children}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }
 
 export function DataTable<TData, TValue>({
