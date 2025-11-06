@@ -154,7 +154,7 @@ jobs:
           NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
 
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm run playwright:install
 
       - name: Start server
         run: pnpm start &
@@ -165,7 +165,7 @@ jobs:
         run: npx wait-on http://localhost:3000
 
       - name: Run Playwright tests
-        run: pnpm exec playwright test
+        run: pnpm run playwright
 
 # -----------------------------
 # Final Step: Push “tests-passed” Branch
