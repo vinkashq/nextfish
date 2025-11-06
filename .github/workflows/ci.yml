@@ -66,7 +66,7 @@ jobs:
         run: pnpm install
       - uses: 'google-github-actions/auth@v3'
         with:
-          credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}'
+          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
       - name: Build project
         run: pnpm build
         env:
@@ -99,7 +99,7 @@ jobs:
         run: pnpm install
       - uses: 'google-github-actions/auth@v3'
         with:
-          credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}'
+          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
       - name: Build project
         run: pnpm build
         env:
