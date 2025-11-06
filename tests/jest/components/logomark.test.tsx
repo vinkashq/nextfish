@@ -14,7 +14,7 @@ describe('Logomark', () => {
 
   it('renders with the correct background color', () => {
     render(<Logomark background="accent" />);
-    const pathElement = screen.getByRole('img').querySelector('path');
-    expect(pathElement).toHaveClass('fill-accent');
+    const pathElement = screen.getByRole('img').querySelector('path.fill-accent');
+    expect(pathElement).not.toBeNull();
   });
 });
