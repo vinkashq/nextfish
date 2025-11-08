@@ -6,8 +6,28 @@ permissions:
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'components.json'
+      - '*.config.*'
+      - 'tsconfig*.json'
+      - 'jest.setup.*'
+      - '.github/workflows/**'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'components.json'
+      - '*.config.*'
+      - 'tsconfig*.json'
+      - 'jest.setup.*'
+      - '.github/workflows/**'
 
 env:
   NODE_VERSION: 20
