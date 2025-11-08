@@ -11,4 +11,9 @@ test.describe('CI tests', () => {
     expect(response.ok()).toBeTruthy();
     expect(await response.json()).toEqual({ status: 'ok' });
   });
+
+  test('should redirect /admin to login page when not logged in', async ({ page }) => {
+    await page.goto('http://localhost:3000/admin');
+    await expect(page).toHaveURL(/\/auth\/login/);
+  });
 });
