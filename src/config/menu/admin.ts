@@ -2,7 +2,7 @@ import { Menu } from "@/types/menu"
 import { Image, LayoutDashboard, Users, MessageSquare } from "lucide-react"
 
 export const defaultMenu: Menu = {
-  title: "Admin Console",
+  title: "General",
   baseUrl: "/admin",
   items: [
     {
@@ -19,10 +19,17 @@ export const defaultMenu: Menu = {
       title: "Images",
       url: "/images/",
       icon: Image,
-    },
+    }
+  ]
+}
+
+const aiMenu: Menu = {
+  title: "AI",
+  baseUrl: "/admin/ai",
+  items: [
     {
-      title: "AI Chat",
-      url: "/ai/chat",
+      title: "Chat",
+      url: "/chat",
       icon: MessageSquare,
     }
   ]
@@ -30,4 +37,5 @@ export const defaultMenu: Menu = {
 
 export const menus: Menu[] = [
   defaultMenu,
+  aiMenu,
 ]
