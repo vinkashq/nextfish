@@ -4,6 +4,7 @@ import { auth } from './firebase/server'
 
 const adminPaths = [
   '/admin',
+  '/api/admin',
 ]
 
 const userPaths = [

@@ -1,5 +1,5 @@
 import { Menu } from "@/types/menu"
-import { Image, LayoutDashboard, Users } from "lucide-react"
+import { Image, LayoutDashboard, Users, MessageSquare } from "lucide-react"
 
 export const defaultMenu: Menu = {
   title: "Admin Console",
@@ -19,6 +19,11 @@ export const defaultMenu: Menu = {
       title: "Images",
       url: "/images/",
       icon: Image,
+    },
+    {
+      title: "AI Chat",
+      url: "/ai/chat",
+      icon: MessageSquare,
     }
   ]
 }
