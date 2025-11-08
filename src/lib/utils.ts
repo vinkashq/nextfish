@@ -47,4 +47,34 @@ const getServerToken = async (serverTokenUrl: string): Promise<string> => {
   return token.value;
 }
 
-export { cn, getInputValue, clearInput, postRequest, getServerToken }
+/**
+ * Removes undefined values from an object (shallow)
+ * @param obj - The object to clean
+ * @returns A new object without undefined values
+ */
+const removeUndefined = <T extends Record<string, any>>(obj: T): Partial<T> => {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([_, value]) => value !== undefined)
+  ) as Partial<T>
+}
+
+/**
+ * Recursively removes undefined values from an object (deep)
+ * @param obj - The object to clean
+ * @returns A new object without undefined values
+ */
+const removeUndefinedDeep = <T extends Record<string, any>>(obj: T): Partial<T> => {
+  const cleaned = { ...obj }
+  
+  for (const key in cleaned) {
+    if (cleaned[key] === undefined) {
+      delete cleaned[key]
+    } else if (typeof cleaned[key] === 'object' && cleaned[key] !== null && !Array.isArray(cleaned[key])) {
+      cleaned[key] = removeUndefinedDeep(cleaned[key])
+    }
+  }
+  
+  return cleaned as Partial<T>
+}
+
+export { cn, getInputValue, clearInput, postRequest, getServerToken, removeUndefined, removeUndefinedDeep }

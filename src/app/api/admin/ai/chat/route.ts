@@ -1,32 +1,30 @@
-import googleChatbot from "@/genkit/google/chatbot"
+import FirestoreSessionStore from "@/genkit/chat/FirestoreSessionStore"
+import googleChatbot from "@/genkit/chat/google"
+import { streamText } from "ai"
 import { NextRequest } from "next/server"
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages } = await req.json()
-
-    // Build the conversation context from messages
-    // For Genkit, we'll combine the conversation into a single prompt
-    // or use the last message with context
-    const conversationHistory = messages
-      .map((msg: { role: string; content: string }) => {
-        const role = msg.role === "user" ? "User" : "Assistant"
-        return `${role}: ${msg.content}`
-      })
-      .join("\n\n")
-
-    const currentMessage = messages[messages.length - 1]?.content || ""
-    
-    // Build prompt with conversation history
-    const prompt = conversationHistory.length > currentMessage.length
-      ? `${conversationHistory}\n\nAssistant:`
-      : currentMessage
+    const { id, message } = await req.json()
 
     // Generate response using Genkit chatbot
-    const result = await googleChatbot.generate(prompt)
+    const session = await googleChatbot.createSession({
+      store: new FirestoreSessionStore(),
+      sessionId: id,
+     })
+    const chat = session.chat()
+    const prompt =message.parts?.map((part) => {
+      if (part.type === "text") {
+        return part.text
+      }
+      return ""
+    }).join("\n\n")
+    const result = await chat.send(prompt)
 
     // Get the text response
     const text = result.text || ""
+
+    streamText()
     
     // Create a readable stream for the UI message stream format
     // Format: 0:"text-delta"{"textDelta":"word"}\n
