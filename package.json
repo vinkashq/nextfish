@@ -17,7 +17,8 @@
     "login": "gcloud auth application-default login",
     "serve": "firebase emulators:start",
     "playwright": "playwright test tests/playwright",
-    "playwright:install": "playwright install --with-deps"
+    "playwright:install": "playwright install --with-deps",
+    "valet": "valet proxy $(basename \"$(pwd)\") http://localhost:5002 --secure && pnpm serve && valet unproxy $(basename \"$(pwd)\")"
   },
   "dependencies": {
     "@ai-sdk/react": "^2.0.89",
