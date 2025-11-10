@@ -103,6 +103,8 @@ const signOutOnClient = async (auth: Auth, uid: string) => {
   });
 }
 
+import { getRedirectResult } from "firebase/auth";
+
 const useCurrentUser = () => {
   const { isLoading, auth } = useFirebase();
   const [isUserLoading, setIsUserLoading] = useState(true);
@@ -112,6 +114,18 @@ const useCurrentUser = () => {
 
   useEffect(() => {
     if (isLoading || !auth) return;
+
+    getRedirectResult(auth)
+      .then((userCredential) => {
+        if (userCredential) {
+          logEvent('signed_in', {
+            uid: userCredential.user.uid,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting redirect result:", error);
+      });
 
     onAuthStateChanged(auth, (newUser) => {
       setIsUserLoading(false);
