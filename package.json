@@ -1,8 +1,8 @@
 {
-  "name": "@vinkas/nextfish",
-  "version": "0.0.2",
+  "name": "@vinkas/nextfire",
+  "version": "0.0.3",
   "private": true,
-  "repository": "https://github.com/vinkashq/nextfish",
+  "repository": "https://github.com/vinkashq/nextfire",
   "author": "Vinkas",
   "license": "MIT",
   "scripts": {
