@@ -1,6 +1,6 @@
 "use client";
 
-import { useFirebase } from "@/firebase/client";
+import { useFirebase } from "@/context/firebase/Context";
 import { logEvent } from "firebase/analytics";
 import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
 import { redirect, useSearchParams } from "next/navigation";

@@ -1,16 +1,14 @@
 "use client";
 
-import { useCurrentUser } from "@/firebase/client/auth";
-import { useFirebase } from "@/firebase/client";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 import HeaderGuestMenu from "./guest-menu";
 import HeaderUserMenu from "./user-menu";
 
 export default function HeaderAccountMenu() {
-  useFirebase()
-  const { isLoading, user } = useCurrentUser()
+  const { isLoading, currentUser } = useCurrentUser()
 
   if (isLoading) return null
-  if (user) return <HeaderUserMenu user={user} />
+  if (currentUser) return <HeaderUserMenu user={currentUser} />
 
   return <HeaderGuestMenu />
 }

@@ -2,14 +2,11 @@
 
 import Image from 'next/image';
 import { MouseEvent, useState } from 'react';
-import { toast } from "sonner";
-import { baseUrl } from "@/config";
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { useFirebase } from '@/firebase/client';
-import { signIn } from '@/firebase/client/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
+import { useAuth } from '@/context/firebase/AuthContext';
 
 export default function GoogleSignInButton() {
-  const { auth } = useFirebase();
+  const { auth, signIn } = useAuth()
   const [isDisabled, setIsDisabled] = useState(false);
 
   function signInWithGoogle(event: MouseEvent<HTMLButtonElement>) {
@@ -18,19 +15,10 @@ export default function GoogleSignInButton() {
     setIsDisabled(true);
 
     const provider = new GoogleAuthProvider();
-    signIn(() => signInWithPopup(auth, provider))
-      .then(() => {
-        toast.success('Login successful!');
-        window.location.href = baseUrl;
-      })
+    signIn({ provider })
       .finally(() => {
         setIsDisabled(false);
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        toast.error(`Error signing in with Google: ${errorCode} - ${errorMessage}`);
-      });
   }
 
   return (

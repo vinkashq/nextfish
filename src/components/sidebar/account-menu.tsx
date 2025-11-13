@@ -1,18 +1,16 @@
 "use client";
 
-import { useCurrentUser } from "@/firebase/client/auth";
 import SidebarGuestMenu from "./guest-menu";
 import SidebarUserMenu from "./user-menu";
-import { useFirebase } from "@/firebase/client";
 import { useSidebar } from "../ui/sidebar";
+import { useCurrentUser } from "@/context/CurrentUserContext";
 
 export default function SidebarAccountMenu() {
-  useFirebase()
   const { isMobile } = useSidebar()
-  const { isLoading, user } = useCurrentUser()
+  const { isLoading, currentUser } = useCurrentUser()
 
   if (isMobile || isLoading) return null
-  if (user) return <SidebarUserMenu user={user} />
+  if (currentUser) return <SidebarUserMenu user={currentUser} />
 
   return <SidebarGuestMenu />
 }
