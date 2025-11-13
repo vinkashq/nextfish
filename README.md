@@ -242,6 +242,7 @@ Tests are located in `tests/playwright/`.
 - `pnpm playwright:install` - Install Playwright browsers
 - `pnpm serve` - Start Firebase emulators
 - `pnpm login` - Login to Google Cloud for Genkit
+- `pnpm valet` - (Optional) Use Valet for local development with a secure URL
 
 ## 🔧 Configuration
 
@@ -295,9 +296,9 @@ The application can be deployed to any platform that supports Next.js:
 
 ## 📚 Tech Stack
 
-- **Framework**: Next.js 16
+- **Framework**: Next.js 16.0.1
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS 4
+- **Styling**: Tailwind CSS 4.1.16
 - **UI Components**: shadcn/ui (Radix UI)
 - **Backend**: Firebase (Auth, Firestore, Storage)
 - **AI**: Google Genkit, Imagen, Gemini
