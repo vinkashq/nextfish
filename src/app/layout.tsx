@@ -5,6 +5,7 @@ import { Metadata } from 'next'
 import Toaster from '@/components/toaster'
 import { FirebaseProvider } from '@/context/firebase/Context'
 import { CurrentUserProvider } from '@/context/CurrentUserContext'
+import { firebaseOptions } from '@/firebase'
 
 export const metadata: Metadata = {
   title: {
@@ -18,8 +19,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const firebaseOptions = process.env.FIREBASE_WEBAPP_CONFIG ? JSON.parse(process.env.FIREBASE_WEBAPP_CONFIG) : {}
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="[--header-height:calc(--spacing(16))]">
