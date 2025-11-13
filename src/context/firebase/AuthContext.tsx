@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, useContext } from "react"
 import { useFirebase } from "./Context"
-import { Auth, AuthProvider as FirebaseAuthProvider, signInWithCustomToken, signInWithEmailAndPassword, signInWithEmailLink, signInWithPopup, UserCredential } from "firebase/auth"
+import { Auth, AuthProvider as FirebaseAuthProvider, signInWithCustomToken, signInWithEmailAndPassword, signInWithEmailLink, signInWithPopup, signInWithRedirect, UserCredential } from "firebase/auth"
 import { useAnalytics } from "./AnalyticsContext"
 import { toast } from "sonner"
 import { baseUrl } from "@/config"
@@ -16,6 +16,7 @@ type SignInParams = {
   password?: string,
   emailLink?: string,
   provider?: FirebaseAuthProvider,
+  userCredential?: UserCredential,
 }
 
 type FirebaseAuth = {
@@ -46,33 +47,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const getServerToken = async (serverTokenUrl: string): Promise<string> => {
     const appCheckToken = await getAppCheckToken()
     const response = await postRequest(serverTokenUrl, appCheckToken);
-  
-    if (!response.ok) {
-      throw new Error("Failed to get server token: " + response.statusText);
-    }
-  
-    const token = await response.json();
-    if (!token.value) {
-      throw new Error("No token received");
-    }
-  
-    return token.value;
+    const token = await response.json()
+    return token.value
   }
 
-  const signIn = async ({ email, password, emailLink, provider }: SignInParams) => {
-    let userCredential: UserCredential;
-  
+  const signIn = async ({ email, password, emailLink, provider, userCredential }: SignInParams) => {
     try {
       if (email && password) {
         userCredential = await signInWithEmailAndPassword(auth, email, password)
       } else if (email && emailLink) {
         userCredential = await signInWithEmailLink(auth, email, emailLink)
       } else if (provider) {
-        userCredential = await signInWithPopup(auth, provider)
-      } else {
+        userCredential = await signInWithRedirect(auth, provider)
+      } else if (!userCredential) {
         const serverToken = await getServerToken(serverTokenUrl)
         if (!serverToken) {
-          throw new Error("Failed to retrieve token from server.");
+          return
         }
         userCredential = await signInWithCustomToken(auth, serverToken)
       }

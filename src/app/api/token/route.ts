@@ -1,7 +1,7 @@
 import { auth } from "@/firebase/server";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   const userId = request.headers.get("x-user-id");
 
   if (!userId) {

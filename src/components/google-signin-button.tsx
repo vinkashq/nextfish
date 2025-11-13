@@ -9,7 +9,7 @@ export default function GoogleSignInButton() {
   const { auth, signIn } = useAuth()
   const [isDisabled, setIsDisabled] = useState(false);
 
-  function signInWithGoogle(event: MouseEvent<HTMLButtonElement>) {
+  async function signInWithGoogle(event: MouseEvent<HTMLButtonElement>) {
     if (!auth) return;
     event.preventDefault();
     setIsDisabled(true);
