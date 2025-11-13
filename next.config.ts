@@ -1,7 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
 import type { NextConfig } from "next";
-import { firebaseOptions } from '@/firebase';
 
 // eslint-disable-next-line no-unused-vars
 const withPluginRoutes = (pluginName) => {
@@ -15,6 +14,7 @@ const nextConfig: NextConfig = {
     root: process.cwd(),
   },
   rewrites: async () => {
+    const firebaseOptions = process.env.FIREBASE_WEBAPP_CONFIG ? JSON.parse(process.env.FIREBASE_WEBAPP_CONFIG) : {}
     const projectId = firebaseOptions.projectId;
     if (!projectId) {
       return [];
