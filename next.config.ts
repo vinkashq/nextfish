@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import type { NextConfig } from "next";
+import { firebaseOptions } from '@/firebase';
 
 // eslint-disable-next-line no-unused-vars
 const withPluginRoutes = (pluginName) => {
@@ -14,8 +15,10 @@ const nextConfig: NextConfig = {
     root: process.cwd(),
   },
   rewrites: async () => {
-    const FIREBASE_PROJECT_ID = "vinkas-oss";
-    const FIREBASE_AUTH_DOMAIN = `${FIREBASE_PROJECT_ID}.firebaseapp.com`;
+    const projectId = firebaseOptions.projectId;
+    if (!projectId) {
+      return [];
+    }
 
     return [
       {
@@ -25,7 +28,7 @@ const nextConfig: NextConfig = {
         
         // 2. Destination: This is where the Next.js server secretly fetches the file from.
         // It points to the *actual* location of the Firebase Auth handler files.
-        destination: `https://${FIREBASE_AUTH_DOMAIN}/__/:path*`,
+        destination: `https://${projectId}.web.app/__/:path*`,
       }
     ]
   },
