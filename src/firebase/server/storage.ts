@@ -1,6 +1,5 @@
-import { storage } from ".";
-import { storageBucket } from "../const";
+import { storage } from "."
 
-const bucket = storage.bucket(storageBucket)
+const bucket = storage.bucket()
 
 export { bucket };
