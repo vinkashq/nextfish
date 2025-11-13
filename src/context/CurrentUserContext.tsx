@@ -1,7 +1,7 @@
 "use client"
 
-import { createContext, ReactNode, useContext, useEffect, useState } from "react"
-import { onAuthStateChanged, User } from "firebase/auth"
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react"
+import { getRedirectResult, onAuthStateChanged, User } from "firebase/auth"
 import { baseUrl } from "@/config"
 import { postRequest } from "@/lib/utils"
 import { useAuth } from "./firebase/AuthContext"
@@ -43,7 +43,7 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
   const { logEvent } = useAnalytics()
   const { getAppCheckToken } = useAppCheck()
 
-  const signOutOnClient = async () => {
+  const signOutOnClient = useCallback(async () => {
     const uid = currentUser?.uid
     if (!uid) {
       return
@@ -54,7 +54,7 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
     logEvent('signed_out', {
       uid,
     });
-  }
+  }, [auth, currentUser, logEvent])
 
   const signOutOnServer = async (redirectUrl: string) => {
     const uid = currentUser?.uid
@@ -87,7 +87,7 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
     window.location.href = redirectUrl
   }
 
-  const verifyIdToken = async (user: User) => {
+  const verifyIdToken = useCallback(async (user: User) => {
     const idToken = await user?.getIdToken()
     if (!idToken) {
       console.error("User ID token is not available.")
@@ -112,7 +112,7 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
       uid: user.uid,
     });
     return true;
-  }
+  }, [getAppCheckToken, logEvent, signOutOnClient])
 
   useEffect(() => {
     if (auth) {
@@ -120,19 +120,22 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
         setCurrentUser(newUser)
         setAuthStateLoading(false)
       })
+
+      getRedirectResult(auth).then((userCredential) => {
+        signIn({ userCredential })
+      }).catch((error) => {
+        console.log(error)
+      })
+
       return () => unsubscribe()
     }
-  }, [auth])
+  }, [auth, signIn])
 
   useEffect(() => {
     if (!authStateLoading && !currentUser && useServerToken) {
       signIn({})
-        .then((userCredential) => {
-          const user = userCredential?.user
-          if (user) {
-            setCurrentUser(user)
-            setUseServerToken(false)
-          }
+        .finally(() => {
+          setUseServerToken(false)
         })
     }
   }, [currentUser, signIn, authStateLoading, useServerToken])

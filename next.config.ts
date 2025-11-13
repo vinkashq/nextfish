@@ -13,6 +13,22 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  rewrites: async () => {
+    const FIREBASE_PROJECT_ID = "vinkas-oss";
+    const FIREBASE_AUTH_DOMAIN = `${FIREBASE_PROJECT_ID}.firebaseapp.com`;
+
+    return [
+      {
+        // 1. Source: This is the path the browser requests on your custom domain.
+        // It matches the Firebase Auth handler paths (__/auth/handler, __/auth/iframe, etc.).
+        source: "/__/:path*",
+        
+        // 2. Destination: This is where the Next.js server secretly fetches the file from.
+        // It points to the *actual* location of the Firebase Auth handler files.
+        destination: `https://${FIREBASE_AUTH_DOMAIN}/__/:path*`,
+      }
+    ]
+  },
   headers: async () => [{
     source: '/account/:path*',
     headers: [
