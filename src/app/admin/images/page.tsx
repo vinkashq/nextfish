@@ -4,6 +4,8 @@ import { firestore } from "@/firebase/server";
 import { DocumentData } from "firebase/firestore";
 import Image from "next/image";
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page() {
   const images: DocumentData[] = []
   const query = firestore.collection("images").orderBy("createdAt", "desc").limit(10)
