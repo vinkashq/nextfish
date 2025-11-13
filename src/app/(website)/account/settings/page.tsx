@@ -4,8 +4,8 @@ import BreadcrumbHeading from "@/components/breadcrumb-heading"
 import { Button } from "@/components/ui/button"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemGroup, ItemMedia, ItemTitle } from "@/components/ui/item"
 import { Spinner } from "@/components/ui/spinner"
-import { useFirebase } from "@/firebase/client"
-import { useCurrentUser } from "@/firebase/client/auth"
+import { useCurrentUser } from "@/context/CurrentUserContext"
+import { useFirebase } from "@/context/firebase/Context"
 import { sendPasswordResetEmail } from "firebase/auth"
 import { Mail, RectangleEllipsis } from "lucide-react"
 import { useState } from "react"
@@ -13,19 +13,19 @@ import { toast } from "sonner"
 
 export default function Settings() {
   const { auth } = useFirebase()
-  const { user } = useCurrentUser()
+  const { currentUser } = useCurrentUser()
   const [sendingPasswordResetEmail, setSendingPasswordResetEmail] = useState(false)
 
   function resetPassword() {
     setSendingPasswordResetEmail(true)
 
-    if (!user || !user.email) {
+    if (!currentUser || !currentUser.email) {
       console.error("No user or email found")
       setSendingPasswordResetEmail(false)
       return
     }
 
-    sendPasswordResetEmail(auth, user.email)
+    sendPasswordResetEmail(auth, currentUser.email)
       .then(() => {
         toast.success("Password reset email sent successfully!")
       })
@@ -38,7 +38,7 @@ export default function Settings() {
       })
   }
 
-  if (!user) {
+  if (!currentUser) {
     return <div className="mx-auto max-w-4xl">Loading...</div>
   }
 
@@ -57,7 +57,7 @@ export default function Settings() {
           </ItemMedia>
           <ItemContent>
             <ItemTitle>Email Address</ItemTitle>
-            <ItemDescription>{user.email}</ItemDescription>
+            <ItemDescription>{currentUser.email}</ItemDescription>
           </ItemContent>
           <ItemFooter className="text-muted-foreground">
             We use your email address to send you important notifications and security updates.

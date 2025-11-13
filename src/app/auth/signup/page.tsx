@@ -7,12 +7,12 @@ import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useFirebase } from "@/firebase/client";
 import { FormEvent, useState } from "react";
 import { createUserWithEmailAndPassword, sendEmailVerification, User } from "firebase/auth";
 import { clearInput, getInputValue } from "@/lib/utils";
 import { toast } from "sonner";
 import BreadcrumbHeading from "@/components/breadcrumb-heading";
+import { useFirebase } from "@/context/firebase/Context";
 
 export default function Page() {
   const { auth } = useFirebase();

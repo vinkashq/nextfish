@@ -5,17 +5,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react";
-import { baseUrl, emailLinkLoginUrl } from "@/config"
-import { sendSignInLinkToEmail, signInWithEmailAndPassword } from "firebase/auth"
-import { toast } from "sonner"
+import { emailLinkLoginUrl } from "@/config"
+import { sendSignInLinkToEmail } from "firebase/auth"
 import GoogleSignInButton from "@/components/google-signin-button"
-import { useFirebase } from "@/firebase/client"
 import BreadcrumbHeading from "@/components/breadcrumb-heading"
 import { Spinner } from "@/components/ui/spinner"
-import { signIn } from "@/firebase/client/auth"
+import { useAuth } from "@/context/firebase/AuthContext"
 
 export default function Page() {
-  const { auth } = useFirebase();
+  const { auth, signIn } = useAuth();
   const [isDisabled, setIsDisabled] = useState(false);
   const [passwordRequired, setPasswordRequired] = useState(true);
   const [message, setMessage] = useState('');
@@ -70,26 +68,12 @@ export default function Page() {
 
       const email = getInputValue("email");
       const password = getInputValue("password");
-
-      signIn(() => signInWithEmailAndPassword(auth, email, password))
-        .then(() => {
-          toast.success('Login successful!');
-          window.location.href = baseUrl;
-        })
-        .catch((error) => {
-          if (error.code === 'auth/invalid-credential') {
-            toast.error('Invalid credentials. Please check your email and/or password.', {
-              duration: Infinity,
-            });
-          } else {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            toast.error(errorCode + ' ' + errorMessage);
-          }
-        })
-        .finally(() => {
-          setIsDisabled(false);
-        });
+      signIn({
+        email,
+        password,
+      }).finally(() => {
+        setIsDisabled(false);
+      })
     }
     loginForm.requestSubmit(); // Submit the form to trigger validation
   }

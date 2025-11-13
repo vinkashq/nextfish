@@ -1,4 +1,4 @@
-# Vinkas NextFish
+# Vinkas NextFire
 
 A modern, full-stack Next.js application template built with Firebase, shadcn/ui, TypeScript, and AI capabilities. This project provides a solid foundation for building scalable web applications with authentication, admin panels, and plugin architecture.
 
@@ -41,8 +41,8 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/vinkashq/nextfish.git
-   cd nextfish
+   git clone https://github.com/vinkashq/nextfire.git
+   cd nextfire
    ```
 
 2. **Install dependencies**
@@ -64,7 +64,7 @@ Before you begin, ensure you have the following installed:
    NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
 
    # Application Configuration
-   NEXT_PUBLIC_APP_NAME=NextFish
+   NEXT_PUBLIC_APP_NAME=NextFire
    NEXT_PUBLIC_APP_TITLE=Next.js + Firebase + Shadcn UI Template
    NEXT_PUBLIC_HOSTNAME=your-domain.com
 
@@ -128,7 +128,7 @@ This starts the Firebase emulators including:
 ## 📁 Project Structure
 
 ```
-nextfish/
+nextfire/
 ├── src/
 │   ├── app/                    # Next.js App Router pages
 │   │   ├── (plugins)/         # Plugin routes
@@ -157,7 +157,7 @@ nextfish/
 
 ## 🔌 Plugin System
 
-NextFish includes a plugin architecture that allows you to extend functionality. To create a plugin:
+NextFire includes a plugin architecture that allows you to extend functionality. To create a plugin:
 
 1. Create a directory in the `plugins/` folder
 2. Add your routes in `plugins/your-plugin/routes/`
@@ -242,6 +242,7 @@ Tests are located in `tests/playwright/`.
 - `pnpm playwright:install` - Install Playwright browsers
 - `pnpm serve` - Start Firebase emulators
 - `pnpm login` - Login to Google Cloud for Genkit
+- `pnpm valet` - (Optional) Use Valet for local development with a secure URL
 
 ## 🔧 Configuration
 
@@ -295,9 +296,9 @@ The application can be deployed to any platform that supports Next.js:
 
 ## 📚 Tech Stack
 
-- **Framework**: Next.js 16
+- **Framework**: Next.js 16.0.1
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS 4
+- **Styling**: Tailwind CSS 4.1.16
 - **UI Components**: shadcn/ui (Radix UI)
 - **Backend**: Firebase (Auth, Firestore, Storage)
 - **AI**: Google Genkit, Imagen, Gemini
@@ -325,7 +326,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Vinkas**
 
 - GitHub: [@vinkashq](https://github.com/vinkashq)
-- Repository: [nextfish](https://github.com/vinkashq/nextfish)
+- Repository: [nextfire](https://github.com/vinkashq/nextfire)
 
 ## 🙏 Acknowledgments
 
@@ -336,7 +337,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-For support, please open an issue in the [GitHub repository](https://github.com/vinkashq/nextfish/issues).
+For support, please open an issue in the [GitHub repository](https://github.com/vinkashq/nextfire/issues).
 
 ---
 

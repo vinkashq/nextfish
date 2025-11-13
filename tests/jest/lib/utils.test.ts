@@ -1,8 +1,5 @@
-import { cn, getInputValue, clearInput, postRequest, getServerToken } from '@/lib/utils';
-
-jest.mock('@/firebase/client', () => ({
-  getAppCheckToken: jest.fn(() => Promise.resolve('mock-token')),
-}));
+import { cn, getInputValue, clearInput, postRequest } from '@/lib/utils'
+import fetchMock from 'jest-fetch-mock'
 
 describe('cn', () => {
   it('merges Tailwind CSS classes correctly', () => {
@@ -37,7 +34,7 @@ describe('postRequest', () => {
     fetchMock.mockResponseOnce(JSON.stringify({ success: true }));
 
     // eslint-disable-next-line no-unused-vars
-    const response = await postRequest('/test-url', { data: 'test-data' });
+    const response = await postRequest('/test-url', "mock-token", { data: 'test-data' });
 
     expect(fetchMock.mock.calls.length).toEqual(1);
     expect(fetchMock.mock.calls[0][0]).toEqual('/test-url');
@@ -47,33 +44,5 @@ describe('postRequest', () => {
       'X-Firebase-AppCheck': 'mock-token',
     });
     expect(fetchMock.mock.calls[0][1]?.body).toEqual(JSON.stringify({ data: 'test-data' }));
-  });
-});
-
-describe('getServerToken', () => {
-  beforeEach(() => {
-    fetchMock.resetMocks();
-  });
-
-  it('returns a server token when the request is successful', async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ value: 'server-token' }));
-
-    const token = await getServerToken('/server-token-url');
-
-    expect(token).toEqual('server-token');
-  });
-
-  it('throws an error when the request fails', async () => {
-    fetchMock.mockResponseOnce('Error', { status: 500 });
-
-    await expect(getServerToken('/server-token-url')).rejects.toThrow(
-      'Failed to get server token: Internal Server Error'
-    );
-  });
-
-  it('throws an error when no token is received', async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({}));
-
-    await expect(getServerToken('/server-token-url')).rejects.toThrow('No token received');
   });
 });

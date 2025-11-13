@@ -1,4 +1,4 @@
-export const appName = process.env.NEXT_PUBLIC_APP_NAME || "NextFish";
+export const appName = process.env.NEXT_PUBLIC_APP_NAME || "NextFire";
 export const appTitle = process.env.NEXT_PUBLIC_APP_TITLE || "Next.js + Firebase + Shadcn UI Template";
 export const hostname = process.env.NEXT_PUBLIC_HOSTNAME;
 export const baseUrl = hostname ? `https://${hostname}` : "";

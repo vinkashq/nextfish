@@ -1,6 +1,10 @@
-import { storage } from ".";
-import { storageBucket } from "../const";
+import { storage } from "."
+import { firebaseOptions } from "@/firebase";
 
-const bucket = storage.bucket(storageBucket)
+let defaultBucketName: string
+if (firebaseOptions) {
+  defaultBucketName = firebaseOptions.storageBucket
+}
+const bucket = defaultBucketName ? storage.bucket(defaultBucketName) : storage.bucket()
 
 export { bucket };

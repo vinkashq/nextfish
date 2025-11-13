@@ -2,13 +2,11 @@
 
 import Image from 'next/image';
 import { MouseEvent, useState } from 'react';
-import { toast } from "sonner";
-import { baseUrl } from "@/config";
-import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
-import { useFirebase } from '@/firebase/client';
+import { GoogleAuthProvider } from 'firebase/auth';
+import { useAuth } from '@/context/firebase/AuthContext';
 
 export default function GoogleSignInButton() {
-  const { auth } = useFirebase();
+  const { auth, signIn } = useAuth()
   const [isDisabled, setIsDisabled] = useState(false);
 
   async function signInWithGoogle(event: MouseEvent<HTMLButtonElement>) {
@@ -16,16 +14,11 @@ export default function GoogleSignInButton() {
     event.preventDefault();
     setIsDisabled(true);
 
-    try {
-      const provider = new GoogleAuthProvider();
-      await signInWithRedirect(auth, provider);
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      toast.error(`Error signing in with Google: ${errorCode} - ${errorMessage}`);
-    } finally {
-      setIsDisabled(false);
-    }
+    const provider = new GoogleAuthProvider();
+    signIn({ provider })
+      .finally(() => {
+        setIsDisabled(false);
+      })
   }
 
   return (

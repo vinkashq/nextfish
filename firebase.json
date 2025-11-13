@@ -1,6 +1,6 @@
 {
   "apphosting": {
-    "backendId": "",
+    "backendId": "nextfire",
     "rootDir": "/",
     "ignore": [
       "node_modules",
