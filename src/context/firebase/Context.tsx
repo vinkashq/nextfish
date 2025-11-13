@@ -20,6 +20,7 @@ export type Firebase = {
   firestore: Firestore,
   storage: FirebaseStorage,
   analytics: Analytics,
+  options: FirebaseOptions,
 }
 
 const FirebaseContext = createContext<Firebase>({
@@ -30,6 +31,7 @@ const FirebaseContext = createContext<Firebase>({
   firestore: null,
   storage: null,
   analytics: null,
+  options: null,
 })
 
 export const useFirebase = () => {
@@ -77,6 +79,7 @@ export const FirebaseProvider = ({ options, children }: { options: FirebaseOptio
       firestore,
       storage,
       analytics,
+      options,
     }
   }, [windowType, options])
 

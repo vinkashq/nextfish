@@ -5,7 +5,7 @@ import { useFirebase } from "./Context"
 import { Auth, AuthProvider as FirebaseAuthProvider, signInWithCustomToken, signInWithEmailAndPassword, signInWithEmailLink, signInWithPopup, signInWithRedirect, UserCredential } from "firebase/auth"
 import { useAnalytics } from "./AnalyticsContext"
 import { toast } from "sonner"
-import { baseUrl } from "@/config"
+import { baseUrl, hostname } from "@/config"
 import { postRequest } from "@/lib/utils"
 import { useAppCheck } from "./AppCheckContext"
 
@@ -40,7 +40,7 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { auth } = useFirebase()
+  const { auth, options } = useFirebase()
   const { logEvent } = useAnalytics()
   const { getAppCheckToken } = useAppCheck()
 
@@ -58,7 +58,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else if (email && emailLink) {
         userCredential = await signInWithEmailLink(auth, email, emailLink)
       } else if (provider) {
-        userCredential = await signInWithRedirect(auth, provider)
+        if (options.authDomain !== hostname) {
+          userCredential = await signInWithPopup(auth, provider)
+        } else {
+          userCredential = await signInWithRedirect(auth, provider)
+        }
       } else if (!userCredential) {
         const serverToken = await getServerToken(serverTokenUrl)
         if (!serverToken) {
