@@ -53,15 +53,10 @@ Before you begin, ensure you have the following installed:
 3. **Set up environment variables**
    
    Create a `.env.local` file in the root directory with the following variables:
+   
    ```env
-   # Firebase Configuration
-   NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-   NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
+   # Firebase Web App Configuration (JSON string)
+   FIREBASE_WEBAPP_CONFIG={"apiKey":"your_api_key","authDomain":"your_project.firebaseapp.com","projectId":"your_project_id","storageBucket":"your_project.appspot.com","messagingSenderId":"your_sender_id","appId":"your_app_id","measurementId":"your_measurement_id"}
 
    # Application Configuration
    NEXT_PUBLIC_APP_NAME=NextFire
@@ -74,13 +69,15 @@ Before you begin, ensure you have the following installed:
    NEXT_PUBLIC_LEGAL_BUSINESS_COUNTRY=Your Country
    NEXT_PUBLIC_LEGAL_CONTACT_EMAIL=your-email@example.com
 
-   # reCAPTCHA (Optional)
+   # reCAPTCHA (Optional - Required for Firebase App Check)
    NEXT_PUBLIC_RE_CAPTCHA_SITE_KEY=your_recaptcha_site_key
 
    # Theme Colors (Optional)
    NEXT_THEME_PRIMARY_COLOR=#171717
    NEXT_THEME_PRIMARY_FOREGROUND_COLOR=#fafafa
    ```
+   
+   **Note**: For Firebase App Hosting, configure `NEXT_PUBLIC_RE_CAPTCHA_SITE_KEY` as a secret in `apphosting.yaml` (see Configuration section).
 
 4. **Set up Firebase Admin SDK**
    
@@ -173,7 +170,11 @@ The application supports multiple authentication methods:
 - **Email/Password** - Traditional email and password authentication
 - **Email Link** - Passwordless authentication via email link
 - **Google Sign-In** - OAuth authentication with Google
+  - Automatically uses **popup** method when deployed on a custom domain
+  - Uses **redirect** method when the auth domain matches the hostname (for better compatibility)
 - **Forgot Password** - Password reset functionality
+
+**Firebase Auth Rewrites**: The application includes automatic rewrites for Firebase Auth handler paths (`/__/auth/*`) to support custom domains. This is configured in `next.config.ts` and requires the `FIREBASE_WEBAPP_CONFIG` environment variable.
 
 Authentication pages are located in `src/app/auth/`.
 
@@ -183,6 +184,9 @@ Access the admin panel at `/admin` (requires admin privileges). Features include
 
 - **User Management** - View and edit user accounts
 - **Image Administration** - Manage generated images
+  - Dynamic rendering for real-time image updates
+  - Image generation with Google Imagen
+  - Image metadata tracking (dimensions, aspect ratio, file size)
 - **Data Tables** - Built with TanStack Table
 
 ## 🎨 UI Components
@@ -252,14 +256,21 @@ Edit `next.config.ts` to customize:
 - Plugin routes
 - Headers and caching
 - Redirects
+- **Firebase Auth rewrites** - Automatically configured for custom domains when `FIREBASE_WEBAPP_CONFIG` is set
 - Webpack configuration
+
+The Firebase Auth rewrites allow Firebase Authentication to work properly on custom domains by forwarding requests from `__/auth/*` paths to the Firebase project's default domain.
 
 ### Firebase Configuration
 
 Firebase settings are configured in:
 - `firebase.json` - Firebase project configuration
-- `apphosting.yaml` - App Hosting configuration
+- `apphosting.yaml` - App Hosting configuration (includes reCAPTCHA site key secret)
 - `apphosting.emulator.yaml` - Emulator configuration
+
+**Firebase Options Handling**: The application uses `FIREBASE_WEBAPP_CONFIG` as a JSON string for Firebase configuration. This allows for server-side and client-side use of the same configuration.
+
+The storage bucket is automatically initialized from the Firebase options, eliminating the need for hardcoded bucket names.
 
 ### Theme Configuration
 
@@ -281,10 +292,23 @@ This project is configured for Firebase App Hosting. To deploy:
    firebase use your-project-id
    ```
 
-3. Deploy:
+3. **Set up secrets** (if using reCAPTCHA):
+   Configure secrets in Firebase Secret Manager and reference them in `apphosting.yaml`:
+   ```yaml
+   env:
+     - variable: NEXT_PUBLIC_RE_CAPTCHA_SITE_KEY
+       secret: RE_CAPTCHA_SITE_KEY
+       availability:
+         - BUILD
+         - RUNTIME
+   ```
+
+4. Deploy:
    ```bash
    firebase deploy --only apphosting
    ```
+
+**Custom Domain Support**: When deploying to a custom domain, Firebase Auth rewrites are automatically configured to ensure authentication flows work correctly. The Google Sign-In will use popup mode on custom domains for better UX.
 
 ### Other Platforms
 
@@ -296,16 +320,27 @@ The application can be deployed to any platform that supports Next.js:
 
 ## 📚 Tech Stack
 
-- **Framework**: Next.js 16.0.1
-- **Language**: TypeScript
+- **Framework**: Next.js 16.0.1 (with dynamic rendering support)
+- **Language**: TypeScript 5.9.3
 - **Styling**: Tailwind CSS 4.1.16
 - **UI Components**: shadcn/ui (Radix UI)
 - **Backend**: Firebase (Auth, Firestore, Storage)
+  - Firebase Auth with automatic popup/redirect handling
+  - Firebase Auth rewrites for custom domains
 - **AI**: Google Genkit, Imagen, Gemini
 - **State Management**: Nanostores
 - **Forms**: React Hook Form + Zod
 - **Testing**: Jest, Playwright
 - **Package Manager**: pnpm
+
+## 🔄 Recent Updates
+
+- **Firebase Configuration**: Support for `FIREBASE_WEBAPP_CONFIG` environment variable for server-side configuration
+- **Google Sign-In**: Automatic popup/redirect selection based on auth domain
+- **Firebase Auth Rewrites**: Automatic configuration for custom domain deployments
+- **Dynamic Rendering**: Images page now uses dynamic rendering for real-time updates
+- **Storage Initialization**: Automatic storage bucket initialization from Firebase options
+- **reCAPTCHA Integration**: Enhanced configuration support in App Hosting
 
 ## 🤝 Contributing
 
