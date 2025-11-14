@@ -6,16 +6,13 @@ import { Auth, AuthProvider as FirebaseAuthProvider, signInWithCustomToken, sign
 import { useAnalytics } from "./AnalyticsContext"
 import { toast } from "sonner"
 import { baseUrl, hostname } from "@/config"
-import { postRequest } from "@/lib/utils"
-import { useAppCheck } from "./AppCheckContext"
-
-const serverTokenUrl = `${baseUrl}/api/token`
 
 type SignInParams = {
   email?: string,
   password?: string,
   emailLink?: string,
   provider?: FirebaseAuthProvider,
+  serverToken?: string,
   userCredential?: UserCredential,
 }
 
@@ -42,16 +39,8 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { auth, options } = useFirebase()
   const { logEvent } = useAnalytics()
-  const { getAppCheckToken } = useAppCheck()
 
-  const getServerToken = async (serverTokenUrl: string): Promise<string> => {
-    const appCheckToken = await getAppCheckToken()
-    const response = await postRequest(serverTokenUrl, appCheckToken);
-    const token = await response.json()
-    return token.value
-  }
-
-  const signIn = async ({ email, password, emailLink, provider, userCredential }: SignInParams) => {
+  const signIn = async ({ email, password, emailLink, provider, serverToken, userCredential }: SignInParams) => {
     try {
       if (email && password) {
         userCredential = await signInWithEmailAndPassword(auth, email, password)
@@ -63,20 +52,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         } else {
           userCredential = await signInWithRedirect(auth, provider)
         }
-      } else if (!userCredential) {
-        const serverToken = await getServerToken(serverTokenUrl)
-        if (!serverToken) {
-          return
-        }
+      } else if (serverToken) {
         userCredential = await signInWithCustomToken(auth, serverToken)
       }
-      toast.success('Login successful!')
 
-      logEvent('signed_in', {
-        uid: userCredential.user.uid,
-      })
+      if (!serverToken) {
+        toast.success('Login successful!')
 
-      window.location.href = baseUrl;
+        logEvent('signed_in', {
+          uid: userCredential.user.uid,
+        })
+
+        window.location.href = baseUrl;
+      }
     } catch (error) {
       if (error.code === 'auth/invalid-credential') {
         toast.error('Invalid credentials. Please check your email and/or password.', {
@@ -87,6 +75,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const errorMessage = error.message;
         if (provider) {
           toast.error(`Error signing in with Google: ${errorCode} - ${errorMessage}`)
+        } else if (serverToken) {
+          console.error('Error signing in with server token:', error)
         } else {
           toast.error(errorCode + ' ' + errorMessage);
         }

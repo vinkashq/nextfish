@@ -10,6 +10,7 @@ import { useAppCheck } from "./firebase/AppCheckContext"
 
 const idTokenVerificationUrl = `${baseUrl}/api/verify-id-token`
 const serverSignOutUrl = `${baseUrl}/api/sign-out`
+const serverTokenUrl = `${baseUrl}/api/token`
 
 type CurrentUser = {
   isLoading: boolean,
@@ -42,6 +43,17 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
 
   const { logEvent } = useAnalytics()
   const { getAppCheckToken } = useAppCheck()
+
+  const getServerToken = useCallback(async (serverTokenUrl: string): Promise<string> => {
+    const appCheckToken = await getAppCheckToken()
+    const response = await postRequest(serverTokenUrl, appCheckToken);
+    if (!response.ok) {
+      console.error('Failed to get server token:', response.statusText)
+      return null
+    }
+    const token = await response.json()
+    return token.value
+  }, [getAppCheckToken])
 
   const signOutOnClient = useCallback(async () => {
     const uid = currentUser?.uid
@@ -96,15 +108,16 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
   
     try {
       const appCheckToken = await getAppCheckToken()
+      if (!appCheckToken) {
+        return false
+      }
       const response = await postRequest(idTokenVerificationUrl, appCheckToken, { idToken })
       if (!response.ok) {
         console.error('Failed to verify ID token:', response.statusText)
-        await signOutOnClient()
         return false
       }
     } catch (error) {
       console.error('Error verifying ID token:', error)
-      await signOutOnClient()
       return false
     }
   
@@ -112,13 +125,18 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
       uid: user.uid,
     });
     return true;
-  }, [getAppCheckToken, logEvent, signOutOnClient])
+  }, [getAppCheckToken, logEvent])
 
   useEffect(() => {
     if (auth) {
       const unsubscribe = onAuthStateChanged(auth, (newUser) => {
         setCurrentUser(newUser)
         setAuthStateLoading(false)
+        // Reset idTokenVerified when a new user signs in (not when signing out)
+        // This allows verification to run for new users
+        if (newUser) {
+          setIdTokenVerified(undefined)
+        }
       })
 
       getRedirectResult(auth).then((userCredential) => {
@@ -132,26 +150,41 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
   }, [auth, signIn])
 
   useEffect(() => {
-    if (!authStateLoading && !currentUser && useServerToken) {
-      signIn({})
-        .finally(() => {
+    // Only attempt server token sign-in if:
+    // 1. Auth state is loaded
+    // 2. No current user
+    // 3. Server token sign-in hasn't been attempted yet
+    // 4. ID token verification hasn't failed (to prevent loops after verification failures)
+    if (!authStateLoading && !currentUser && useServerToken && idTokenVerified !== false) {
+      getServerToken(serverTokenUrl).then((serverToken) => {
+        if (!serverToken) {
           setUseServerToken(false)
-        })
+          return
+        }
+        signIn({ serverToken })
+          .finally(() => {
+            setUseServerToken(false)
+          })
+      })
     }
-  }, [currentUser, signIn, authStateLoading, useServerToken])
+  }, [currentUser, signIn, authStateLoading, useServerToken, idTokenVerified, getServerToken])
 
   useEffect(() => {
     if (currentUser && idTokenVerified === undefined) {
       verifyIdToken(currentUser)
         .then((verified) => {
           setIdTokenVerified(verified)
+
+          if (!verified) {
+            signOutOnClient()
+          }
         })
         .catch((error) => {
           console.error('Error verifying ID token:', error)
           setIdTokenVerified(false)
         })
     }
-  }, [currentUser, idTokenVerified, verifyIdToken])
+  }, [currentUser, idTokenVerified, verifyIdToken, signOutOnClient])
 
   const value = {
     isLoading: authStateLoading || (!currentUser && useServerToken),
