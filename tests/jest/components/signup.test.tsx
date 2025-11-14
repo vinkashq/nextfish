@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { toast } from 'sonner';
@@ -24,21 +25,17 @@ jest.mock('@/context/firebase/Context', () => ({
 }));
 
 // Mock Next.js Link and Image
-import React from 'react';
-
-const MockNextLink = ({ children, href }: { children: React.ReactNode; href: string }) => {
-  return <a href={href}>{children}</a>;
-};
-MockNextLink.displayName = 'MockNextLink';
-jest.mock('next/link', () => MockNextLink);
+jest.mock('next/link', () => {
+  return function MockNextLink({ children, href }: { children: React.ReactNode; href: string }) {
+    return <a href={href}>{children}</a>;
+  };
+});
 
 jest.mock('next/image', () => {
-  const NextImage = ({ src, alt }: { src: string; alt: string }) => {
+  return function MockNextImage({ src, alt }: { src: string; alt: string }) {
     // eslint-disable-next-line @next/next/no-img-element
     return <img src={src as string} alt={alt} />;
   };
-  NextImage.displayName = 'MockNextImage';
-  return NextImage;
 });
 
 // Mock config
