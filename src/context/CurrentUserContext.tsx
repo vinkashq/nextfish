@@ -140,6 +140,9 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
       })
 
       getRedirectResult(auth).then((userCredential) => {
+        if (!userCredential) {
+          return
+        }
         signIn({ userCredential })
       }).catch((error) => {
         console.log(error)
