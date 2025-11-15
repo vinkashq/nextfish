@@ -4,11 +4,16 @@ import SidebarNav from "@/components/sidebar/nav"
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { menus } from "@/config/menu/admin"
+import { Cog } from "lucide-react"
 import { ComponentProps } from "react"
 
 export default function AdminSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
@@ -31,6 +36,16 @@ export default function AdminSidebar({ ...props }: ComponentProps<typeof Sidebar
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton tooltip="Settings">
+            <Cog />
+            <span>Settings</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )
