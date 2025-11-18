@@ -19,7 +19,7 @@ import { toast } from "sonner"
 
 interface RoleFormDialogProps {
   open: boolean
-  onOpenChange: (open: boolean) => void
+  onOpenChange: (_open: boolean) => void
   role?: Role | null
   onSuccess?: () => void
 }
@@ -32,18 +32,15 @@ export function RoleFormDialog({
 }: RoleFormDialogProps) {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [permissions, setPermissions] = useState("")
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (role) {
       setName(role.name || "")
       setDescription(role.description || "")
-      setPermissions((role.permissions || []).join(", "))
     } else {
       setName("")
       setDescription("")
-      setPermissions("")
     }
   }, [role, open])
 
@@ -52,16 +49,10 @@ export function RoleFormDialog({
     setLoading(true)
 
     try {
-      const permissionsArray = permissions
-        .split(",")
-        .map((p) => p.trim())
-        .filter((p) => p.length > 0)
-
       if (role) {
         const result = await updateRole(role.id, {
           name,
           description,
-          permissions: permissionsArray,
         })
         if (result) {
           toast.success("Role updated successfully")
@@ -74,7 +65,6 @@ export function RoleFormDialog({
         const result = await createRole({
           name,
           description,
-          permissions: permissionsArray,
         })
         if (result) {
           toast.success("Role created successfully")
@@ -124,18 +114,6 @@ export function RoleFormDialog({
                 placeholder="Enter a description for this role"
                 rows={3}
               />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="permissions">Permissions</Label>
-              <Input
-                id="permissions"
-                value={permissions}
-                onChange={(e) => setPermissions(e.target.value)}
-                placeholder="e.g., read:users, write:users, delete:users (comma-separated)"
-              />
-              <p className="text-muted-foreground text-xs">
-                Enter permissions separated by commas
-              </p>
             </div>
           </div>
           <DialogFooter>

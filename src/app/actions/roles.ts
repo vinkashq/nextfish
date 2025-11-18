@@ -16,7 +16,6 @@ export async function listRoles(): Promise<Role[]> {
         id: doc.id,
         name: data.name || '',
         description: data.description || '',
-        permissions: data.permissions || [],
         createdAt: data.createdAt?.toDate(),
         updatedAt: data.updatedAt?.toDate(),
       });
@@ -42,7 +41,6 @@ export async function getRole(id: string): Promise<Role | null> {
       id: doc.id,
       name: data?.name || '',
       description: data?.description || '',
-      permissions: data?.permissions || [],
       createdAt: data?.createdAt?.toDate(),
       updatedAt: data?.updatedAt?.toDate(),
     };
@@ -58,7 +56,6 @@ export async function createRole(role: Omit<Role, 'id' | 'createdAt' | 'updatedA
     const newRole = {
       name: role.name,
       description: role.description || '',
-      permissions: role.permissions || [],
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     };
@@ -73,7 +70,6 @@ export async function createRole(role: Omit<Role, 'id' | 'createdAt' | 'updatedA
       id: createdDoc.id,
       name: data?.name || '',
       description: data?.description || '',
-      permissions: data?.permissions || [],
       createdAt: data?.createdAt?.toDate(),
       updatedAt: data?.updatedAt?.toDate(),
     };
@@ -91,7 +87,6 @@ export async function updateRole(id: string, role: Partial<Omit<Role, 'id' | 'cr
     
     if (role.name !== undefined) updateData.name = role.name;
     if (role.description !== undefined) updateData.description = role.description;
-    if (role.permissions !== undefined) updateData.permissions = role.permissions;
     
     await firestore.collection('roles').doc(id).update(updateData);
     revalidatePath('/admin/roles');

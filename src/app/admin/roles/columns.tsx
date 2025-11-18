@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export const columns = (
-  onEdit: (role: Role) => void,
-  onDelete: (role: Role) => void
+  onEdit: (_role: Role) => void,
+  onDelete: (_role: Role) => void
 ): ColumnDef<Role>[] => [
   {
     accessorKey: "name",
@@ -23,22 +23,6 @@ export const columns = (
       return (
         <div className="max-w-[300px] truncate">
           {description || <span className="text-muted-foreground">No description</span>}
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: "permissions",
-    header: "Permissions",
-    cell: ({ row }) => {
-      const permissions = row.getValue("permissions") as string[]
-      return (
-        <div className="max-w-[200px]">
-          {permissions && permissions.length > 0 ? (
-            <span className="text-sm">{permissions.length} permission{permissions.length !== 1 ? 's' : ''}</span>
-          ) : (
-            <span className="text-muted-foreground text-sm">No permissions</span>
-          )}
         </div>
       )
     },
