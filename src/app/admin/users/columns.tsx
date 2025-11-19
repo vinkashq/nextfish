@@ -9,7 +9,7 @@ import {
 import { InputCopyable } from "@/components/ui/input-copyable"
 import { DataTableActionsMenu } from "@/components/data-table"
 
-export const columns = (): ColumnDef<User>[] => [
+export const columns = (onAssignRoles?: (user: User) => void): ColumnDef<User>[] => [
   {
     accessorKey: "displayName",
     header: "Name",
@@ -42,6 +42,11 @@ export const columns = (): ColumnDef<User>[] => [
           <DropdownMenuItem asChild>
             <Link href={`/admin/users/${user.uid}/edit`}>Edit</Link>
           </DropdownMenuItem>
+          {onAssignRoles && (
+            <DropdownMenuItem onClick={() => onAssignRoles(user)}>
+              Assign Roles
+            </DropdownMenuItem>
+          )}
         </DataTableActionsMenu>
       )
     },
