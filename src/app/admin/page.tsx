@@ -5,16 +5,18 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
 import { Database, Loader2 } from "lucide-react"
+import { postRequest } from "@/lib/utils"
+import { useAppCheck } from "@/context/firebase/AppCheckContext"
 
 export default function Page() {
   const [loading, setLoading] = useState(false)
+  const { getAppCheckToken } = useAppCheck()
 
   const handleSeed = async () => {
     setLoading(true)
     try {
-      const response = await fetch("/api/admin/seed", {
-        method: "POST",
-      })
+      const appCheckToken = await getAppCheckToken()
+      const response = await postRequest("/api/admin/seed", appCheckToken)
 
       const data = await response.json()
 
