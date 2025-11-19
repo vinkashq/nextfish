@@ -18,7 +18,8 @@
     "serve": "firebase emulators:start",
     "playwright": "playwright test tests/playwright",
     "playwright:install": "playwright install --with-deps",
-    "valet": "valet proxy $(basename \"$(pwd)\") http://localhost:5002 --secure && pnpm serve && valet unproxy $(basename \"$(pwd)\")"
+    "valet": "valet proxy $(basename \"$(pwd)\") http://localhost:5002 --secure && pnpm serve && valet unproxy $(basename \"$(pwd)\")",
+    "pull:upstream": "git checkout nextfire && git pull upstream tests-passed && git push origin nextfire && git checkout main && git merge nextfire"
   },
   "dependencies": {
     "@ai-sdk/react": "^2.0.89",
