@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 import { firestore } from "@/firebase/server";
 import { FieldValue } from "firebase-admin/firestore";
 
+export const adminRoleId = "admin";
+
 export async function POST() {
   try {
-    const adminRoleId = "admin";
     const adminRoleRef = firestore.collection('roles').doc(adminRoleId);
-    
+
     // Check if Admin role already exists
     const existingDoc = await adminRoleRef.get();
     if (existingDoc.exists) {
@@ -15,7 +16,7 @@ export async function POST() {
         { status: 200 }
       );
     }
-    
+
     // Create Admin role
     await adminRoleRef.set({
       name: "Admin",
