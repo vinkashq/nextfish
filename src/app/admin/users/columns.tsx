@@ -8,8 +8,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { InputCopyable } from "@/components/ui/input-copyable"
 import { DataTableActionsMenu } from "@/components/data-table"
+import UserAvatar from "@/components/user/avatar"
 
 export const columns = (onAssignRoles?: (user: User) => void): ColumnDef<User>[] => [
+  {
+    id: "avatar",
+    header: "",
+    cell: ({ row }) => {
+      const user = row.original
+      return <UserAvatar user={user} />
+    },
+  },
   {
     accessorKey: "displayName",
     header: "Name",
