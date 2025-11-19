@@ -58,7 +58,7 @@ export async function createRole(role: Omit<Role, 'id' | 'createdAt' | 'updatedA
     // Check if role already exists
     const existingDoc = await docRef.get();
     if (existingDoc.exists) {
-      throw new Error(`Role with name "${role.name}" already exists`);
+      throw new Error(`Role with ID "${docId}" already exists`);
     }
     
     const newRole = {
