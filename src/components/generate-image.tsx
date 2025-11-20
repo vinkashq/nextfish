@@ -1,12 +1,13 @@
 "use client"
 
 import { InputGroup, InputGroupAddon, InputGroupButton } from "@/components/ui/input-group";
-import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from "sonner";
 
 export default function GenerateImage() {
+  const router = useRouter()
   const [prompt, setPrompt] = useState("")
   const [generating, setGenerating] = useState(false)
 
@@ -25,7 +26,7 @@ export default function GenerateImage() {
         response.json().then(() => {
           resolve(true)
           setPrompt("")
-          revalidatePath('/admin/images')
+          router.refresh()
         })
       }).catch((err) => {
         reject()
