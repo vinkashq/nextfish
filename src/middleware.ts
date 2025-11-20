@@ -22,7 +22,7 @@ const pathsRequireAuth = [
 const pathsToCheckRevokedIdToken = [
   '/api/token'
 ]
- 
+
 export default async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   const headers = request.headers
@@ -45,9 +45,9 @@ export default async function middleware(request: NextRequest) {
   const cookie = request.cookies.get(sessionCookie)
   if (cookie) {
     try {
-       const checkRevoked = pathsToCheckRevokedIdToken.some(path => pathname.startsWith(path))
-       const decodedIdToken = await auth.verifySessionCookie(cookie.value, checkRevoked)
-       userId = decodedIdToken.uid
+      const checkRevoked = pathsToCheckRevokedIdToken.some(path => pathname.startsWith(path))
+      const decodedIdToken = await auth.verifySessionCookie(cookie.value, checkRevoked)
+      userId = decodedIdToken.uid
     } catch {
       deleteSessionCookie = true
     }
@@ -79,7 +79,7 @@ export default async function middleware(request: NextRequest) {
           const data = userRolesDoc.data()
           const roleIds: string[] = data?.roleIds || []
           const hasAdminRole = roleIds.includes(adminRoleId)
-          
+
           if (!hasAdminRole) {
             if (wantsJSON) {
               response = NextResponse.json(
