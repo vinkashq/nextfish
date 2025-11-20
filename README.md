@@ -2,6 +2,11 @@
 
 A modern, full-stack Next.js application template built with Firebase, shadcn/ui, TypeScript, and AI capabilities. This project provides a solid foundation for building scalable web applications with authentication, admin panels, and plugin architecture.
 
+## Disclaimer
+
+- ⚠️ The project is under **very active** development.
+- ⚠️ Expect bugs and breaking changes.
+
 ## 🚀 Features
 
 - **Next.js 16** with App Router and Turbopack support
