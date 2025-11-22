@@ -1,4 +1,4 @@
-import { CollectionReference } from "firebase-admin/firestore"
+import { CollectionReference, DocumentReference, FieldValue } from "firebase-admin/firestore"
 import { firestore } from "."
 import crypto from "crypto"
 
@@ -28,10 +28,12 @@ const generateId = () => {
   return crypto.randomBytes(8).toString("base64url").slice(0, 11)
 }
 
-const createDoc = async (collectionRef: CollectionReference, data: FirebaseFirestore.WithFieldValue<FirebaseFirestore.DocumentData>) => {
+const addDoc = async (collectionRef: CollectionReference, data: FirebaseFirestore.WithFieldValue<FirebaseFirestore.DocumentData>) => {
   while (true) {
     const id = generateId()
     const ref = collectionRef.doc(id)
+    data.createdAt = FieldValue.serverTimestamp()
+    data.updatedAt = FieldValue.serverTimestamp()
 
     try {
       await firestore.runTransaction(async (tx) => {
@@ -44,6 +46,12 @@ const createDoc = async (collectionRef: CollectionReference, data: FirebaseFires
   }
 }
 
+const createDoc = async (ref: DocumentReference, data: FirebaseFirestore.WithFieldValue<FirebaseFirestore.DocumentData>) => {
+  data.createdAt = FieldValue.serverTimestamp()
+  data.updatedAt = FieldValue.serverTimestamp()
+  await ref.create(data)
+}
+
 export {
   collectionRef,
   docRef,
@@ -52,6 +60,7 @@ export {
   findDoc,
   getData,
   findData,
+  addDoc,
   createDoc,
   generateId
 }
