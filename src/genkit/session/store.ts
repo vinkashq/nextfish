@@ -3,14 +3,16 @@ import { DocumentData } from "firebase-admin/firestore";
 import { SessionData, SessionStore } from "genkit";
 
 class GenkitSessionStore<S = DocumentData> implements SessionStore<S> {
-  get collectionPath() {
-    return "genkitSessions"
+  collectionPath: string
+
+  constructor(collectionPath?: string) {
+    this.collectionPath = collectionPath || "genkitSessions"
   }
 
-  async get(topicId: string): Promise<SessionData<S> | undefined> {
-    const topicSessionRef = docRef(this.collectionPath, topicId)
+  async get(sessionId: string): Promise<SessionData<S> | undefined> {
+    const sessionRef = docRef(this.collectionPath, sessionId)
     try {
-      const sessionDoc = await topicSessionRef.get()
+      const sessionDoc = await sessionRef.get()
       return sessionDoc.data() as SessionData<S>
     } catch (err) {
       console.error(err)
@@ -18,9 +20,14 @@ class GenkitSessionStore<S = DocumentData> implements SessionStore<S> {
     }
   }
 
-  async save(topicId: string, sessionData: SessionData<S>): Promise<void> {
-    const topicSessionRef = docRef(this.collectionPath, topicId)
-    await topicSessionRef.set(sessionData)
+  async save(sessionId: string, sessionData: SessionData<S>): Promise<void> {
+    const sessionRef = docRef(this.collectionPath, sessionId)
+    await sessionRef.set(sessionData)
+  }
+
+  async delete(sessionId: string): Promise<void> {
+    const sessionRef = docRef(this.collectionPath, sessionId)
+    await sessionRef.delete()
   }
 }
 
