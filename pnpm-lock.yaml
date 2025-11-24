@@ -72,8 +72,8 @@ importers:
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       ai:
-        specifier: ^5.0.89
-        version: 5.0.89(zod@4.1.12)
+        specifier: ^5.0.100
+        version: 5.0.100(zod@4.1.12)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
