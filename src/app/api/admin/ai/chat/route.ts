@@ -1,68 +1,62 @@
+import { auth } from "@/firebase/server"
 import googleChatbot from "@/genkit/google/chatbot"
-import { NextRequest } from "next/server"
+import GenkitSessionStore from "@/genkit/session/store"
+import { DocumentData, FieldValue } from "firebase-admin/firestore"
+import { Session } from "genkit"
+import { NextRequest, NextResponse } from "next/server"
 
-export async function POST(req: NextRequest) {
-  try {
-    const { messages } = await req.json()
+export async function POST(request: NextRequest) {
+  const sessionStore = new GenkitSessionStore()
+  const data = await request.json()
+  const query = data.query
+  let sessionId = data.sessionId
+  let session: Session<DocumentData>
+  const userId = request.headers.get("x-user-id")
+  const currentUser = await auth.getUser(userId)
 
-    // Build the conversation context from messages
-    // For Genkit, we'll combine the conversation into a single prompt
-    // or use the last message with context
-    const conversationHistory = messages
-      .map((msg: { role: string; content: string }) => {
-        const role = msg.role === "user" ? "User" : "Assistant"
-        return `${role}: ${msg.content}`
-      })
-      .join("\n\n")
-
-    const currentMessage = messages[messages.length - 1]?.content || ""
-    
-    // Build prompt with conversation history
-    const prompt = conversationHistory.length > currentMessage.length
-      ? `${conversationHistory}\n\nAssistant:`
-      : currentMessage
-
-    // Generate response using Genkit chatbot
-    const result = await googleChatbot.generate(prompt)
-
-    // Get the text response
-    const text = result.text || ""
-    
-    // Create a readable stream for the UI message stream format
-    // Format: 0:"text-delta"{"textDelta":"word"}\n
-    const encoder = new TextEncoder()
-    const stream = new ReadableStream({
-      async start(controller) {
-        // Stream the text word by word for smooth streaming
-        const words = text.split(/(\s+)/)
-        for (const word of words) {
-          const chunk = `0:"text-delta"${JSON.stringify({ textDelta: word })}\n`
-          controller.enqueue(encoder.encode(chunk))
-          // Small delay for smooth streaming effect
-          await new Promise((resolve) => setTimeout(resolve, 20))
-        }
-        // Send finish chunk
-        const finishChunk = `0:"text-done"{}\n`
-        controller.enqueue(encoder.encode(finishChunk))
-        controller.close()
-      },
-    })
-
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "X-Vercel-AI-Data-Stream": "v1",
-      },
-    })
-  } catch (error) {
-    console.error("Chat API error:", error)
-    return new Response(
-      JSON.stringify({ error: "Failed to generate chat response" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
+  if (!sessionId) {
+    session = googleChatbot.createSession({
+      store: sessionStore,
+      initialState: {
+        userId: currentUser.uid,
+        createdAt: FieldValue.serverTimestamp(),
+        loadedAt: FieldValue.serverTimestamp(),
+        updatedAt: FieldValue.serverTimestamp(),
       }
-    )
+    })
+  } else {
+    session = await googleChatbot.loadSession(sessionId, {
+      store: sessionStore,
+    })
+    session.updateState({
+      loadedAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
+    })
   }
+
+  const chat = session.chat({
+    context: {
+      auth: currentUser
+    }
+  })
+  const encoder = new TextEncoder()
+
+  const readableStream = new ReadableStream({
+    async start(controller) {
+      const streamResponse = chat.sendStream(query)
+      for await (const chunk of streamResponse.stream) {
+        const text = encoder.encode(chunk.text)
+        controller.enqueue(text)
+      }
+      controller.close()
+    }
+  })
+
+  return new NextResponse(readableStream, {
+    headers: {
+      'Content-Type': 'text/plain',
+      'Transfer-Encoding': 'chunked',
+    },
+  })
 }
 
