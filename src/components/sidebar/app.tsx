@@ -4,9 +4,14 @@ import SidebarNav from "@/components/sidebar/nav"
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { menus } from "@/config/menu"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion"
@@ -40,6 +45,15 @@ export default function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>)
           ))}
         </Accordion>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Toggle Sidebar">
+              <SidebarTrigger className="text-muted-foreground size-5 [&_svg:not([class*='size-'])]:size-5" mobileIcon="X" />
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )
