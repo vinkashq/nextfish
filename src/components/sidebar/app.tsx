@@ -48,8 +48,8 @@ export default function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>)
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Toggle Sidebar">
-              <SidebarTrigger className="text-muted-foreground size-5 [&_svg:not([class*='size-'])]:size-5" mobileIcon="X" />
+            <SidebarMenuButton tooltip="Toggle Sidebar" asChild>
+              <SidebarTrigger mobileIcon="X" />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
