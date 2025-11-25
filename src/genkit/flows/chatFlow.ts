@@ -1,13 +1,19 @@
 import { Session, z } from "genkit";
-import googleChatbot from "../google/chatbot";
+import googleChatbot from "@/genkit/google/chatbot";
 import { DocumentData, FieldValue } from "firebase-admin/firestore";
-import GenkitSessionStore from "../session/store";
+import GenkitSessionStore from "@/genkit/session/store";
 
 const chatFlow = googleChatbot.defineFlow({
   name: "chatFlow",
   inputSchema: z.object({
     sessionId: z.string().optional(),
     message: z.string(),
+  }),
+  streamSchema: z.string(),
+  outputSchema: z.object({
+    sessionId: z.string(),
+    message: z.string(),
+    model: z.string().optional(),
   }),
 }, async ({ sessionId, message }, { sendChunk }) => {
   let session: Session<DocumentData>
@@ -22,6 +28,7 @@ const chatFlow = googleChatbot.defineFlow({
         updatedAt: FieldValue.serverTimestamp(),
       }
     })
+    sessionId = session.id
   } else {
     session = await googleChatbot.loadSession(sessionId, {
       store: sessionStore,
@@ -36,13 +43,15 @@ const chatFlow = googleChatbot.defineFlow({
 
   const { stream, response } = chat.sendStream(message)
   for await (const chunk of stream) {
-    sendChunk(chunk)
+    sendChunk(chunk.text)
   }
 
-  const { text } = await response
+  const { text, model } = await response
 
   return {
-    text
+    sessionId,
+    message: text,
+    model,
   }
 })
 

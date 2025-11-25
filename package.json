@@ -22,7 +22,6 @@
     "pull:upstream": "git checkout nextfire && git pull upstream tests-passed && git push origin nextfire && git checkout main && git merge nextfire"
   },
   "dependencies": {
-    "@ai-sdk/react": "^2.0.100",
     "@genkit-ai/google-genai": "^1.22.0",
     "@genkit-ai/next": "^1.22.0",
     "@hookform/resolvers": "^5.2.2",
@@ -42,7 +41,6 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tailwindcss/postcss": "^4.1.17",
     "@tanstack/react-table": "^8.21.3",
-    "ai": "^5.0.100",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "data-urls": "^6.0.0",

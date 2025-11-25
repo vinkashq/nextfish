@@ -48,3 +48,6 @@ pglite-debug.log
 .firebaserc
 src/app/(plugins)/*
 !src/app/(plugins)/.gitkeep
+
+# genkit
+.genkit
