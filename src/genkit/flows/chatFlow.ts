@@ -2,12 +2,14 @@ import { Session, z } from "genkit";
 import googleChatbot from "@/genkit/google/chatbot";
 import { DocumentData, FieldValue } from "firebase-admin/firestore";
 import GenkitSessionStore from "@/genkit/session/store";
+import { addDoc, collectionRef } from "@/firebase/server/firestore";
 
 const chatFlow = googleChatbot.defineFlow({
   name: "chatFlow",
   inputSchema: z.object({
     sessionId: z.string().optional(),
-    message: z.string(),
+    promptMessage: z.string(),
+    promptType: z.string(),
   }),
   streamSchema: z.string(),
   outputSchema: z.object({
@@ -15,11 +17,12 @@ const chatFlow = googleChatbot.defineFlow({
     message: z.string(),
     model: z.string().optional(),
   }),
-}, async ({ sessionId, message }, { sendChunk }) => {
+}, async ({ sessionId, promptMessage, promptType }, { sendChunk }) => {
   let session: Session<DocumentData>
   const sessionStore = new GenkitSessionStore()
+  const isNewSession = !sessionId
 
-  if (!sessionId) {
+  if (isNewSession) {
     session = googleChatbot.createSession({
       store: sessionStore,
       initialState: {
@@ -41,14 +44,23 @@ const chatFlow = googleChatbot.defineFlow({
 
   const chat = session.chat()
 
-  const { stream, response } = chat.sendStream(message)
+  const { stream, response } = chat.sendStream(promptMessage)
   for await (const chunk of stream) {
     sendChunk(chunk.text)
   }
 
   const { text, model } = await response
 
+  // const ref = collectionRef("admin/ai/chats")
+  // const chatId = await addDoc(ref, {
+  //   sessionId,
+  //   promptMessage,
+  //   promptType,
+  //   model,
+  // })
+
   return {
+    // chatId,
     sessionId,
     message: text,
     model,

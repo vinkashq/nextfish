@@ -8,10 +8,10 @@ import ChatPrompt from "@/components/ai/chat/prompt"
 export default function ChatPage() {
   const [streamedMessage, setStreamedMessage] = useState("")
 
-  const send = async (promptMessage: string) => {
+  const send = async (promptMessage: string, promptType: string) => {
     const response = streamFlow<typeof chatFlow>({
       url: "/api/admin/ai/chat",
-      input: { message: promptMessage },
+      input: { promptMessage, promptType },
     })
 
     for await (const chunk of response.stream) {
@@ -23,9 +23,9 @@ export default function ChatPage() {
   }
 
   return (
-    <>
+    <div className="w-full h-full flex flex-col gap-2 justify-center mx-auto py-2">
       {streamedMessage}
       <ChatPrompt onSend={send} />
-    </>
+    </div>
   )
 }
