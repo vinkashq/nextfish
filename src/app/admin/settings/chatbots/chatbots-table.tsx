@@ -64,7 +64,7 @@ export default function ChatbotsTable({ initialChatbots }: ChatbotsTableProps) {
     <>
       <div className="flex justify-end mb-4">
         <Button onClick={handleAdd}>
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus />
           Add Chatbot
         </Button>
       </div>
